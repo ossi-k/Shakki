@@ -1,7 +1,8 @@
 package com.mycompany.shakki;
 
 public class Shakki {
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         Board board = new Board();
 
         //System.out.println(board.printBoard());
@@ -51,9 +52,20 @@ public class Shakki {
         System.out.println(board.printBoard());
         board.movePiece(1, 0, 2, 0);
         System.out.println(board.printBoard());
-        board.movePiece(2, 7, 7, 2);
+        //board.movePiece(7, 1, 5, 2);
+        //System.out.println(board.printBoard());
+        board.movePiece(6, 0, 5, 0);
         System.out.println(board.printBoard());
+        board.movePiece(2, 0, 3, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(7, 0, 6, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(0, 2, 2, 4);
+        System.out.println(board.printBoard());
+        board.movePiece(6, 3, 7, 4);
+        System.out.println(board.printBoard());
+        System.out.println("Kumman vuoro " + board.isWhiteToMove());
 
     }
-    
+
 }

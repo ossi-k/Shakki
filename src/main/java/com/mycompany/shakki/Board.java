@@ -52,6 +52,10 @@ public class Board {
         }
     }
 
+    public boolean isWhiteToMove() {
+        return whiteToMove;
+    }
+
     public String printBoard() {
         String tilanne = "";
         for (int rank = 0; rank < 8; rank++) {
@@ -200,6 +204,113 @@ public class Board {
                         return false;
                     }
                     file -= 1;
+                }
+            }
+        }
+        if (piece.getName().equals("rook")) {
+            //moving up
+            if (endRank < startRank) {
+                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                    if (board[rank][piece.getFile()] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving down
+            if (endRank > startRank) {
+                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                    if (board[rank][piece.getFile()] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving left
+            if (endFile < startFile) {
+                for (int file = piece.getFile() - 1; file >= endFile; file--) {
+                    if (board[piece.getRank()][file] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving right
+            if (endFile > startFile) {
+                for (int file = piece.getFile() + 1; file <= endFile; file++) {
+                    if (board[piece.getRank()][file] != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+        if (piece.getName().equals("queen")) {
+            //moving down and right
+            if (endRank > startRank && endFile > startFile) {
+                int file = piece.getFile() + 1;
+                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                    if (board[rank][file] != null) {
+                        return false;
+                    }
+                    file += 1;
+                }
+            }
+            //moving up and right
+            if (endRank < startRank && endFile > startFile) {
+                int file = piece.getFile() + 1;
+                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                    if (board[rank][file] != null) {
+                        return false;
+                    }
+                    file += 1;
+                }
+            }
+            //moving left and down
+            if (endRank > startRank && endFile < startFile) {
+                int file = piece.getFile() - 1;
+                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                    if (board[rank][file] != null) {
+                        return false;
+                    }
+                    file -= 1;
+                }
+            }
+            //moving left and up
+            if (endRank < startRank && endFile < startFile) {
+                int file = piece.getFile() - 1;
+                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                    if (board[rank][file] != null) {
+                        return false;
+                    }
+                    file -= 1;
+                }
+            }
+            if (endRank < startRank && endFile == startFile) {
+                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                    if (board[rank][piece.getFile()] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving down
+            if (endRank > startRank && endFile == startFile) {
+                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                    if (board[rank][piece.getFile()] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving left
+            if (endFile < startFile && endRank == startRank) {
+                for (int file = piece.getFile() - 1; file >= endFile; file--) {
+                    if (board[piece.getRank()][file] != null) {
+                        return false;
+                    }
+                }
+            }
+            //moving right
+            if (endFile > startFile && endRank == startRank) {
+                for (int file = piece.getFile() + 1; file <= endFile; file++) {
+                    if (board[piece.getRank()][file] != null) {
+                        return false;
+                    }
                 }
             }
         }
