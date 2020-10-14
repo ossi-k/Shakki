@@ -1,52 +1,68 @@
 package com.mycompany.shakki;
 
+import java.util.ArrayList;
+
 public class Board {
 
     private Piece[][] board;
+    private ArrayList<Piece> piecesOnBoard;
     private boolean whiteToMove;
 
     public Board() {
         board = new Piece[8][8];
+        piecesOnBoard = new ArrayList<>();
         whiteToMove = true;
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
                 //Mustat namiskat
                 if (rank == 0 && (file == 0 || file == 7)) {
                     board[rank][file] = new Piece("rook", "black", rank, file, -5);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 0 && (file == 1 || file == 6)) {
                     board[rank][file] = new Piece("knight", "black", rank, file, -3);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 0 && (file == 2 || file == 5)) {
                     board[rank][file] = new Piece("bishop", "black", rank, file, -3);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 0 && file == 3) {
                     board[rank][file] = new Piece("queen", "black", rank, file, -9);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 0 && file == 4) {
                     board[rank][file] = new Piece("King", "black", rank, file, 0);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 1) {
                     board[rank][file] = new Piece("pawn", "black", rank, file, -1);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 //valkoiset namiskat
                 if (rank == 7 && (file == 0 || file == 7)) {
                     board[rank][file] = new Piece("rook", "white", rank, file, 5);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 7 && (file == 1 || file == 6)) {
                     board[rank][file] = new Piece("knight", "white", rank, file, 3);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 7 && (file == 2 || file == 5)) {
                     board[rank][file] = new Piece("bishop", "white", rank, file, 3);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 7 && file == 3) {
                     board[rank][file] = new Piece("queen", "white", rank, file, 9);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 7 && file == 4) {
                     board[rank][file] = new Piece("King", "white", rank, file, 0);
+                    piecesOnBoard.add(board[rank][file]);
                 }
                 if (rank == 6) {
                     board[rank][file] = new Piece("pawn", "white", rank, file, 1);
+                    piecesOnBoard.add(board[rank][file]);
                 }
             }
         }
@@ -71,6 +87,14 @@ public class Board {
         return tilanne;
     }
 
+    public int evaluateSituation() {
+        int sum = 0;
+        for (Piece piece : piecesOnBoard) {
+            sum += piece.getValue();
+        }
+        return sum;
+    }
+
     public Piece selectPiece(int rank, int file) {
         return board[rank][file];
     }
@@ -93,227 +117,298 @@ public class Board {
     public Boolean legalMoveCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //pawn rules check, moving two squares as first move currently not possible
         if (piece.getName().equals("pawn")) {
-            if (piece.getColor().equals("black")) {
-                if ((endRank <= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
-                    return false;
-                }
-            }
-            if (piece.getColor().equals("white")) {
-                if ((endRank >= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
-                    return false;
-                }
-            }
+            return legalMoveCheckPawn(piece, startRank, startFile, endRank, endFile);
         }
+
         //rook rules check
         if (piece.getName().equals("rook")) {
-            if (endRank != startRank && endFile != startFile) {
-                return false;
-            }
+            return legalMoveCheckRook(piece, startRank, startFile, endRank, endFile);
         }
+
         //bishop rules check
         if (piece.getName().equals("bishop")) {
-            if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
-                return false;
-            }
+            return legalMoveCheckBishop(piece, startRank, startFile, endRank, endFile);
         }
+
         //knight rules check
         if (piece.getName().equals("knight")) {
-            if (Math.abs(endRank - startRank) > 2 || (Math.abs(endFile - startFile) > 2)) {
-                return false;
-            }
-            if ((Math.abs(endRank - startRank) == 2 && (Math.abs(endFile - startFile) != 1))
-                    || (Math.abs(endFile - startFile) == 2) && (Math.abs(endRank - startRank) != 1)) {
-                return false;
-            }
+            return legalMoveCheckKnight(piece, startRank, startFile, endRank, endFile);
         }
         //queen rules check
         if (piece.getName().equals("queen")) {
-            if (endRank != startRank && endFile != startFile) {
-                if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
-                    return false;
-                }
-            }
-            if ((endRank == startRank && endFile != startFile) || (endRank != startRank && endFile == startFile)) {
-                if (endRank != startRank && endFile != startFile) {
-                    return false;
-                }
-            }
+            return legalMoveCheckQueen(piece, startRank, startFile, endRank, endFile);
         }
+
         //king rules check
         if (piece.getName().toLowerCase().equals("king")) {
-            if (Math.abs(endRank - startRank) > 1 || Math.abs(endFile - startFile) > 1) {
-                return false;
-            }
+            return legalMoveCheckKing(piece, startRank, startFile, endRank, endFile);
         }
         return true;
     }
 
     public boolean collisionCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         if (piece.getName().equals("pawn")) {
-            if (piece.getColor().equals("black")) {
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
-            }
-            if (piece.getColor().equals("white")) {
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
-            }
+            return collisionCheckPawn(piece, startRank, startFile, endRank, endFile);
         }
         if (piece.getName().equals("bishop")) {
-            //moving down and right
-            if (endRank > startRank && endFile > startFile) {
-                int file = piece.getFile() + 1;
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file += 1;
-                }
-            }
-            //moving up and right
-            if (endRank < startRank && endFile > startFile) {
-                int file = piece.getFile() + 1;
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file += 1;
-                }
-            }
-            //moving left and down
-            if (endRank > startRank && endFile < startFile) {
-                int file = piece.getFile() - 1;
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file -= 1;
-                }
-            }
-            //moving left and up
-            if (endRank < startRank && endFile < startFile) {
-                int file = piece.getFile() - 1;
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file -= 1;
-                }
-            }
+            return collisionCheckBishop(piece, startRank, startFile, endRank, endFile);
         }
         if (piece.getName().equals("rook")) {
-            //moving up
-            if (endRank < startRank) {
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
+            return collisionCheckRook(piece, startRank, startFile, endRank, endFile);
+        }
+        if (piece.getName().equals("queen")) {
+            return collissionCheckQueen(piece, startRank, startFile, endRank, endFile);
+        }
+        if (piece.getName().equals("king")) {
+            return collisionCheckKing(piece, startRank, startFile, endRank, endFile);
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //pawn rules check, moving two squares as first move currently not possible
+        if (piece.getColor().equals("black")) {
+            if ((endRank <= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
+                return false;
             }
-            //moving down
-            if (endRank > startRank) {
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
+        }
+        if (piece.getColor().equals("white")) {
+            if ((endRank >= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
+                return false;
             }
-            //moving left
-            if (endFile < startFile) {
-                for (int file = piece.getFile() - 1; file >= endFile; file--) {
-                    if (board[piece.getRank()][file] != null) {
-                        return false;
-                    }
-                }
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //rook rules check
+        if (endRank != startRank && endFile != startFile) {
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckBishop(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //bishop rules check
+        if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckKnight(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //knight rules check
+        if (Math.abs(endRank - startRank) > 2 || (Math.abs(endFile - startFile) > 2)) {
+            return false;
+        }
+        if ((Math.abs(endRank - startRank) == 2 && (Math.abs(endFile - startFile) != 1))
+                || (Math.abs(endFile - startFile) == 2) && (Math.abs(endRank - startRank) != 1)) {
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckQueen(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //queen rules check
+        if (endRank != startRank && endFile != startFile) {
+            if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
+                return false;
             }
-            //moving right
-            if (endFile > startFile) {
-                for (int file = piece.getFile() + 1; file <= endFile; file++) {
-                    if (board[piece.getRank()][file] != null) {
-                        return false;
-                    }
+        }
+        if ((endRank == startRank && endFile != startFile) || (endRank != startRank && endFile == startFile)) {
+            if (endRank != startRank && endFile != startFile) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Boolean legalMoveCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //king rules check
+        if (Math.abs(endRank - startRank) > 1 || Math.abs(endFile - startFile) > 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean collisionCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        if (piece.getColor().equals("black")) {
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
                 }
             }
         }
-        if (piece.getName().equals("queen")) {
-            //moving down and right
-            if (endRank > startRank && endFile > startFile) {
-                int file = piece.getFile() + 1;
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file += 1;
-                }
-            }
-            //moving up and right
-            if (endRank < startRank && endFile > startFile) {
-                int file = piece.getFile() + 1;
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file += 1;
-                }
-            }
-            //moving left and down
-            if (endRank > startRank && endFile < startFile) {
-                int file = piece.getFile() - 1;
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file -= 1;
-                }
-            }
-            //moving left and up
-            if (endRank < startRank && endFile < startFile) {
-                int file = piece.getFile() - 1;
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][file] != null) {
-                        return false;
-                    }
-                    file -= 1;
-                }
-            }
-            if (endRank < startRank && endFile == startFile) {
-                for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
-            }
-            //moving down
-            if (endRank > startRank && endFile == startFile) {
-                for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
-                    if (board[rank][piece.getFile()] != null) {
-                        return false;
-                    }
-                }
-            }
-            //moving left
-            if (endFile < startFile && endRank == startRank) {
-                for (int file = piece.getFile() - 1; file >= endFile; file--) {
-                    if (board[piece.getRank()][file] != null) {
-                        return false;
-                    }
-                }
-            }
-            //moving right
-            if (endFile > startFile && endRank == startRank) {
-                for (int file = piece.getFile() + 1; file <= endFile; file++) {
-                    if (board[piece.getRank()][file] != null) {
-                        return false;
-                    }
+        if (piece.getColor().equals("white")) {
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
                 }
             }
         }
         return true;
     }
+
+    public boolean collisionCheckBishop(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //moving down and right
+        if (endRank > startRank && endFile > startFile) {
+            int file = piece.getFile() + 1;
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file += 1;
+            }
+        }
+        //moving up and right
+        if (endRank < startRank && endFile > startFile) {
+            int file = piece.getFile() + 1;
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file += 1;
+            }
+        }
+        //moving left and down
+        if (endRank > startRank && endFile < startFile) {
+            int file = piece.getFile() - 1;
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file -= 1;
+            }
+        }
+        //moving left and up
+        if (endRank < startRank && endFile < startFile) {
+            int file = piece.getFile() - 1;
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file -= 1;
+            }
+        }
+        return true;
+    }
+
+    public boolean collisionCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //moving up
+        if (endRank < startRank) {
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving down
+        if (endRank > startRank) {
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving left
+        if (endFile < startFile) {
+            for (int file = piece.getFile() - 1; file >= endFile; file--) {
+                if (board[piece.getRank()][file] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving right
+        if (endFile > startFile) {
+            for (int file = piece.getFile() + 1; file <= endFile; file++) {
+                if (board[piece.getRank()][file] != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean collissionCheckQueen(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        //moving down and right
+        if (endRank > startRank && endFile > startFile) {
+            int file = piece.getFile() + 1;
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file += 1;
+            }
+        }
+        //moving up and right
+        if (endRank < startRank && endFile > startFile) {
+            int file = piece.getFile() + 1;
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file += 1;
+            }
+        }
+        //moving left and down
+        if (endRank > startRank && endFile < startFile) {
+            int file = piece.getFile() - 1;
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file -= 1;
+            }
+        }
+        //moving left and up
+        if (endRank < startRank && endFile < startFile) {
+            int file = piece.getFile() - 1;
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][file] != null) {
+                    return false;
+                }
+                file -= 1;
+            }
+        }
+        if (endRank < startRank && endFile == startFile) {
+            for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving down
+        if (endRank > startRank && endFile == startFile) {
+            for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
+                if (board[rank][piece.getFile()] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving left
+        if (endFile < startFile && endRank == startRank) {
+            for (int file = piece.getFile() - 1; file >= endFile; file--) {
+                if (board[piece.getRank()][file] != null) {
+                    return false;
+                }
+            }
+        }
+        //moving right
+        if (endFile > startFile && endRank == startRank) {
+            for (int file = piece.getFile() + 1; file <= endFile; file++) {
+                if (board[piece.getRank()][file] != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean collisionCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        if (board[endRank][endFile] != null && board[endRank][endFile].getColor() == piece.getColor()) {
+            return false;
+        }
+        return true;
+    }
+
 }

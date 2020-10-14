@@ -1,9 +1,15 @@
 package com.mycompany.shakki;
 
+import java.util.Scanner;
+
 public class Shakki {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Board board = new Board();
+        UserInterface ui = new UserInterface(board, scanner);
+        
+        ui.launch();
 
         //System.out.println(board.printBoard());
         //System.out.println(board.selectPiece(7, 2).getNameAndColor());
@@ -31,7 +37,7 @@ public class Shakki {
         board.movePiece(4, 0, 3, 0);
         System.out.println(board.printBoard());*/
         //bishop testing
-        board.movePiece(6, 3, 5, 3);
+        /*board.movePiece(6, 3, 5, 3);
         System.out.println(board.printBoard());
         board.movePiece(1, 3, 2, 3);
         System.out.println(board.printBoard());
@@ -62,10 +68,16 @@ public class Shakki {
         System.out.println(board.printBoard());
         board.movePiece(0, 2, 2, 4);
         System.out.println(board.printBoard());
-        board.movePiece(6, 3, 7, 4);
+        board.movePiece(6, 3, 7, 3);
+        System.out.println(board.printBoard());
+        System.out.println("Kumman vuoro " + board.isWhiteToMove());
+        board.movePiece(0, 4, 0, 3);
         System.out.println(board.printBoard());
         System.out.println("Kumman vuoro " + board.isWhiteToMove());
 
+        /*System.out.println(board.printBoard());
+        board.movePiece(6, 0, 3, 0);
+        System.out.println(board.printBoard());*/
     }
 
 }
