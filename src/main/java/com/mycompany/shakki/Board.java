@@ -102,7 +102,7 @@ public class Board {
     public void movePiece(int startRank, int startFile, int endRank, int endFile) {
         Piece piece = board[startRank][startFile];
         if ((piece.getColor().equals("white") && whiteToMove) || (piece.getColor().equals("black") && !whiteToMove)) {
-            if (board[endRank][endFile] == null && legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
+            if (board[endRank][endFile] == null && piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
                 piece.setFile(endFile);
                 piece.setRank(endRank);
                 board[startRank][startFile] = null;
@@ -114,37 +114,6 @@ public class Board {
         }
     }
 
-    public Boolean legalMoveCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //pawn rules check, moving two squares as first move currently not possible
-        if (piece.getName().equals("pawn")) {
-            return legalMoveCheckPawn(piece, startRank, startFile, endRank, endFile);
-        }
-
-        //rook rules check
-        if (piece.getName().equals("rook")) {
-            return legalMoveCheckRook(piece, startRank, startFile, endRank, endFile);
-        }
-
-        //bishop rules check
-        if (piece.getName().equals("bishop")) {
-            return legalMoveCheckBishop(piece, startRank, startFile, endRank, endFile);
-        }
-
-        //knight rules check
-        if (piece.getName().equals("knight")) {
-            return legalMoveCheckKnight(piece, startRank, startFile, endRank, endFile);
-        }
-        //queen rules check
-        if (piece.getName().equals("queen")) {
-            return legalMoveCheckQueen(piece, startRank, startFile, endRank, endFile);
-        }
-
-        //king rules check
-        if (piece.getName().toLowerCase().equals("king")) {
-            return legalMoveCheckKing(piece, startRank, startFile, endRank, endFile);
-        }
-        return true;
-    }
 
     public boolean collisionCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         if (piece.getName().equals("pawn")) {
@@ -161,72 +130,6 @@ public class Board {
         }
         if (piece.getName().equals("king")) {
             return collisionCheckKing(piece, startRank, startFile, endRank, endFile);
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //pawn rules check, moving two squares as first move currently not possible
-        if (piece.getColor().equals("black")) {
-            if ((endRank <= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
-                return false;
-            }
-        }
-        if (piece.getColor().equals("white")) {
-            if ((endRank >= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //rook rules check
-        if (endRank != startRank && endFile != startFile) {
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckBishop(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //bishop rules check
-        if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckKnight(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //knight rules check
-        if (Math.abs(endRank - startRank) > 2 || (Math.abs(endFile - startFile) > 2)) {
-            return false;
-        }
-        if ((Math.abs(endRank - startRank) == 2 && (Math.abs(endFile - startFile) != 1))
-                || (Math.abs(endFile - startFile) == 2) && (Math.abs(endRank - startRank) != 1)) {
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckQueen(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //queen rules check
-        if (endRank != startRank && endFile != startFile) {
-            if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {
-                return false;
-            }
-        }
-        if ((endRank == startRank && endFile != startFile) || (endRank != startRank && endFile == startFile)) {
-            if (endRank != startRank && endFile != startFile) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public Boolean legalMoveCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //king rules check
-        if (Math.abs(endRank - startRank) > 1 || Math.abs(endFile - startFile) > 1) {
-            return false;
         }
         return true;
     }
@@ -410,5 +313,4 @@ public class Board {
         }
         return true;
     }
-
 }
