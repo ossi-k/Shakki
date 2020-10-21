@@ -29,10 +29,10 @@ public class PieceTest {
     public void illegalMoveTestBlack() {
         //pawn
         assertEquals(true, blackPawn.legalMoveCheck(blackPawn, 1, 4, 2, 4));
-        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 1, 4));
+        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 4, 4));
+        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 0, 3));
         assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 0, 4));
-        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 1, 3));
-        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 1, 5));
+        assertEquals(false, blackPawn.legalMoveCheck(blackPawn, 1, 4, 2, 2));
     }
 
 }

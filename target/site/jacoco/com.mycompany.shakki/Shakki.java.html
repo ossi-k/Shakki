@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Shakki.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Shakki</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.shakki</a> &gt; <span class="el_source">Shakki.java</span></div><h1>Shakki.java</h1><pre class="source lang-java linenums">package com.mycompany.shakki;
+
+import java.util.Scanner;
+
+<span class="nc" id="L5">public class Shakki {</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L8">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L9">        Board board = new Board();</span>
+<span class="nc" id="L10">        UserInterface ui = new UserInterface(board, scanner);</span>
+        
+<span class="nc" id="L12">        ui.launch();</span>
+
+        //System.out.println(board.printBoard());
+        //System.out.println(board.selectPiece(7, 2).getNameAndColor());
+        /*board.movePiece(1, 0, 2, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(2, 0, 3, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(3, 0, 4, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(4, 0, 5, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(5, 0, 6, 0);
+        System.out.println(board.printBoard());*/
+        //board.movePiece(1, 0, 5, 0);
+        //System.out.println(board.printBoard());
+        /*board.movePiece(6, 0, 5, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(1, 0, 2, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(5, 0, 4, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(2, 0, 3, 0);
+        System.out.println(board.printBoard());
+        //illegal move
+        board.movePiece(4, 0, 3, 0);
+        System.out.println(board.printBoard());*/
+        //bishop testing
+        /*board.movePiece(6, 3, 5, 3);
+        System.out.println(board.printBoard());
+        board.movePiece(1, 3, 2, 3);
+        System.out.println(board.printBoard());
+        board.movePiece(7, 2, 5, 4);
+        System.out.println(board.printBoard());
+        board.movePiece(1, 2, 2, 2);
+        System.out.println(board.printBoard());
+        board.movePiece(6, 6, 5, 6);
+        System.out.println(board.printBoard());
+        board.movePiece(2, 2, 3, 2);
+        System.out.println(board.printBoard());
+        //fail?
+        board.movePiece(5, 4, 2, 7);
+        System.out.println(board.printBoard());
+        board.movePiece(0, 6, 2, 5);
+        System.out.println(board.printBoard());
+        board.movePiece(7, 3, 6, 3);
+        System.out.println(board.printBoard());
+        board.movePiece(1, 0, 2, 0);
+        System.out.println(board.printBoard());
+        //board.movePiece(7, 1, 5, 2);
+        //System.out.println(board.printBoard());
+        board.movePiece(6, 0, 5, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(2, 0, 3, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(7, 0, 6, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(0, 2, 2, 4);
+        System.out.println(board.printBoard());
+        board.movePiece(6, 3, 7, 3);
+        System.out.println(board.printBoard());
+        System.out.println(&quot;Kumman vuoro &quot; + board.isWhiteToMove());
+        board.movePiece(0, 4, 0, 3);
+        System.out.println(board.printBoard());
+        System.out.println(&quot;Kumman vuoro &quot; + board.isWhiteToMove());
+
+        /*System.out.println(board.printBoard());
+        board.movePiece(6, 0, 3, 0);
+        System.out.println(board.printBoard());*/
+<span class="nc" id="L81">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
