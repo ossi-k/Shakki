@@ -53,6 +53,11 @@ public class Piece {
         this.file = file;
     }
 
+    
+    public void deletePiece(Piece piece) {
+        piece = null;
+    }
+
     public Boolean legalMoveCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //Check that a piece is actually moved
         if (startRank == endRank && startFile == endFile) {

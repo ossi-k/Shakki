@@ -1,16 +1,17 @@
 package com.mycompany.shakki;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Board {
 
     private Piece[][] board;
-    private ArrayList<Piece> piecesOnBoard;
+    private HashSet<Piece> piecesOnBoard;
     private boolean whiteToMove;
 
     public Board() {
         board = new Piece[8][8];
-        piecesOnBoard = new ArrayList<>();
+        piecesOnBoard = new HashSet<>();
         whiteToMove = true;
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
@@ -72,19 +73,36 @@ public class Board {
         return whiteToMove;
     }
 
-    public String printBoard() {
-        String tilanne = "";
+    public void deletAllPieces() {
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
                 if (board[rank][file] != null) {
-                    tilanne += board[rank][file].getNameAndColor().substring(0, 1) + board[rank][file].getNameAndColor().substring(6, 7) + " ";
-                } else {
-                    tilanne += " 0 ";
+                    Piece piece = board[rank][file];
+                    piece.deletePiece(piece);
+                    board[rank][file] = null;
+                    piecesOnBoard.remove(piece);
                 }
             }
-            tilanne += "\n";
         }
-        return tilanne;
+    }
+    
+    public void addNewPiece(String name, String color, int rank, int file, int value) {
+        board[rank][file] = new Piece(name, color, rank, file, value);
+    }
+
+    public String printBoard() {
+        String position = "";
+        for (int rank = 0; rank < 8; rank++) {
+            for (int file = 0; file < 8; file++) {
+                if (board[rank][file] != null) {
+                    position += board[rank][file].getNameAndColor().substring(0, 1) + board[rank][file].getNameAndColor().substring(6, 7) + " ";
+                } else {
+                    position += " 0 ";
+                }
+            }
+            position += "\n";
+        }
+        return position;
     }
 
     public int evaluateSituation() {
@@ -108,12 +126,21 @@ public class Board {
                 board[startRank][startFile] = null;
                 board[endRank][endFile] = piece;
                 whiteToMove = !whiteToMove;
+            } else if (board[endRank][endFile] != null && piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
+                if (board[endRank][endFile].getColor() != piece.getColor()) {
+                    board[endRank][endFile].deletePiece(board[endRank][endFile]);
+                    piecesOnBoard.remove(board[endRank][endFile]);
+                    piece.setFile(endFile);
+                    piece.setRank(endRank);
+                    board[startRank][startFile] = null;
+                    board[endRank][endFile] = piece;
+                    whiteToMove = !whiteToMove;
+                }
             } else {
                 System.out.println("illegal move");
             }
         }
     }
-
 
     public boolean collisionCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         if (piece.getName().equals("pawn")) {
@@ -136,6 +163,9 @@ public class Board {
 
     public boolean collisionCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         if (piece.getColor().equals("black")) {
+            if (board[piece.getRank() + 1][piece.getFile()] != null) {
+                return false;
+            }
             for (int rank = piece.getRank() + 1; rank <= endRank; rank++) {
                 if (board[rank][piece.getFile()] != null) {
                     return false;
@@ -143,6 +173,9 @@ public class Board {
             }
         }
         if (piece.getColor().equals("white")) {
+            if (board[piece.getRank() - 1][piece.getFile()] != null) {
+                return false;
+            }
             for (int rank = piece.getRank() - 1; rank >= endRank; rank--) {
                 if (board[rank][piece.getFile()] != null) {
                     return false;

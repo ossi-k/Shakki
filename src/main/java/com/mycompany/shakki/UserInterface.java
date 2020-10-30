@@ -19,8 +19,13 @@ public class UserInterface {
             System.out.println("2 - Move piece");
             System.out.println("3 - Evaluate current situation");
             System.out.println("4 - Quit");
+            System.out.println("99 - Delet all pieces");
 
             int input = Integer.valueOf(scanner.nextLine());
+            
+            if (input == 99) {
+                board.deletAllPieces();
+            }
 
             if (input == 1) {
                 System.out.println(board.printBoard());
