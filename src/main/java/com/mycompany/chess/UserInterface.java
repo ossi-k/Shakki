@@ -1,4 +1,4 @@
-package com.mycompany.shakki;
+package com.mycompany.chess;
 
 import java.util.Scanner;
 

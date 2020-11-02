@@ -1,9 +1,9 @@
-package com.mycompany.shakki;
+package com.mycompany.chess;
 
 import java.util.Scanner;
 import java.sql.*;
 
-public class Shakki {
+public class Chess {
 
     public static void main(String[] args) {
         /*Connection c = null;

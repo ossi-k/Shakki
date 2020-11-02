@@ -1,5 +1,6 @@
 package com.mycompany.shakki;
 
+import com.mycompany.chess.Piece;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

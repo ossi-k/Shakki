@@ -1,4 +1,4 @@
-package com.mycompany.shakki;
+package com.mycompany.chess;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -124,7 +124,7 @@ public class Board {
 
     public String gameOver() {
         String endGameMessage = "Total moves left before game ends " + (50-moveNumber);
-        if (moveNumber == 1) {
+        if (moveNumber == 50) {
             int endResult = evaluateSituation();
             if (endResult < 0) {
                 endGameMessage = "Black wins";
