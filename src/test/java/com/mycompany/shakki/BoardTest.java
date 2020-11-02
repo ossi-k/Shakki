@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class BoardTest {
 
     @Test
-    public void deletAllPiecesWoks() {
+    public void deleteAllPiecesWorks() {
         Board board = new Board();
         board.deletAllPieces();
         Boolean noPieces = true;

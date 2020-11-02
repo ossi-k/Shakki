@@ -19,10 +19,10 @@ public class UserInterface {
             System.out.println("2 - Move piece");
             System.out.println("3 - Evaluate current situation");
             System.out.println("4 - Quit");
-            System.out.println("99 - Delet all pieces");
+            System.out.println("99 - Delete all pieces");
 
             int input = Integer.valueOf(scanner.nextLine());
-            
+
             if (input == 99) {
                 board.deletAllPieces();
             }
@@ -68,18 +68,21 @@ public class UserInterface {
 
                 board.movePiece(startRank, startFile, endRank, endFile);
                 System.out.println(board.printBoard());
+                if (board.getMoveNumber() == 2) {
+                    System.out.println(board.gameOver());
+                    break;
+                }
             }
 
             if (input == 3) {
                 int score = board.evaluateSituation();
-                
+
                 if (score < 0) {
                     System.out.println("Black is winning, current situation " + score);
                 }
                 if (score > 0) {
                     System.out.println("White is winning, current situation " + score);
-                }
-                else {
+                } else {
                     System.out.println("Game is tied");
                 }
             }

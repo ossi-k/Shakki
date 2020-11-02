@@ -26,11 +26,11 @@ public class Piece {
     }
 
     public int getRank() {
-<span class="nc" id="L29">        return rank;</span>
+<span class="fc" id="L29">        return rank;</span>
     }
 
     public int getFile() {
-<span class="nc" id="L33">        return file;</span>
+<span class="fc" id="L33">        return file;</span>
     }
 
     public int getValue() {
@@ -53,103 +53,108 @@ public class Piece {
 <span class="nc" id="L53">        this.file = file;</span>
 <span class="nc" id="L54">    }</span>
 
+    
+    public void deletePiece(Piece piece) {
+<span class="fc" id="L58">        piece = null;</span>
+<span class="fc" id="L59">    }</span>
+
     public Boolean legalMoveCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //Check that a piece is actually moved
-<span class="fc bfc" id="L58" title="All 4 branches covered.">        if (startRank == endRank &amp;&amp; startFile == endFile) {</span>
-<span class="fc" id="L59">            System.out.println(&quot;Piece must be moved&quot;);</span>
-<span class="fc" id="L60">            return false;</span>
+<span class="fc bfc" id="L63" title="All 4 branches covered.">        if (startRank == endRank &amp;&amp; startFile == endFile) {</span>
+<span class="fc" id="L64">            System.out.println(&quot;Piece must be moved&quot;);</span>
+<span class="fc" id="L65">            return false;</span>
         }
         //pawn rules check, moving two squares as first move currently not possible
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (piece.getName().equals(&quot;pawn&quot;)) {</span>
-<span class="fc" id="L64">            return legalMoveCheckPawn(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (piece.getName().equals(&quot;pawn&quot;)) {</span>
+<span class="fc" id="L69">            return legalMoveCheckPawn(piece, startRank, startFile, endRank, endFile);</span>
         }
 
         //rook rules check
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (piece.getName().equals(&quot;rook&quot;)) {</span>
-<span class="fc" id="L69">            return legalMoveCheckRook(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (piece.getName().equals(&quot;rook&quot;)) {</span>
+<span class="fc" id="L74">            return legalMoveCheckRook(piece, startRank, startFile, endRank, endFile);</span>
         }
 
         //bishop rules check
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (piece.getName().equals(&quot;bishop&quot;)) {</span>
-<span class="fc" id="L74">            return legalMoveCheckBishop(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (piece.getName().equals(&quot;bishop&quot;)) {</span>
+<span class="fc" id="L79">            return legalMoveCheckBishop(piece, startRank, startFile, endRank, endFile);</span>
         }
 
         //knight rules check
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (piece.getName().equals(&quot;knight&quot;)) {</span>
-<span class="fc" id="L79">            return legalMoveCheckKnight(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (piece.getName().equals(&quot;knight&quot;)) {</span>
+<span class="fc" id="L84">            return legalMoveCheckKnight(piece, startRank, startFile, endRank, endFile);</span>
         }
         //queen rules check
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (piece.getName().equals(&quot;queen&quot;)) {</span>
-<span class="fc" id="L83">            return legalMoveCheckQueen(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (piece.getName().equals(&quot;queen&quot;)) {</span>
+<span class="fc" id="L88">            return legalMoveCheckQueen(piece, startRank, startFile, endRank, endFile);</span>
         }
 
         //king rules check
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
-<span class="fc" id="L88">            return legalMoveCheckKing(piece, startRank, startFile, endRank, endFile);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
+<span class="fc" id="L93">            return legalMoveCheckKing(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="nc" id="L90">        return true;</span>
+<span class="nc" id="L95">        return true;</span>
     }
 
     public Boolean legalMoveCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //pawn rules check, moving two squares as first move currently not possible
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;black&quot;)) {</span>
-<span class="fc bfc" id="L96" title="All 6 branches covered.">            if ((endRank &lt;= startRank || endFile != startFile) || Math.abs(endRank - startRank) &gt; 1) {</span>
-<span class="fc" id="L97">                return false;</span>
-            }
-        }
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;white&quot;)) {</span>
-<span class="fc bfc" id="L101" title="All 6 branches covered.">            if ((endRank &gt;= startRank || endFile != startFile) || Math.abs(endRank - startRank) &gt; 1) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;black&quot;)) {</span>
+<span class="fc bfc" id="L101" title="All 6 branches covered.">            if ((endRank &lt;= startRank || endFile != startFile) || Math.abs(endRank - startRank) &gt; 1) {</span>
 <span class="fc" id="L102">                return false;</span>
             }
         }
-<span class="fc" id="L105">        return true;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;white&quot;)) {</span>
+<span class="fc bfc" id="L106" title="All 6 branches covered.">            if ((endRank &gt;= startRank || endFile != startFile) || Math.abs(endRank - startRank) &gt; 1) {</span>
+<span class="fc" id="L107">                return false;</span>
+            }
+        }
+<span class="fc" id="L110">        return true;</span>
     }
 
     public Boolean legalMoveCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //rook rules check
-<span class="fc bfc" id="L110" title="All 4 branches covered.">        if (endRank != startRank &amp;&amp; endFile != startFile) {</span>
-<span class="fc" id="L111">            return false;</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">        if (endRank != startRank &amp;&amp; endFile != startFile) {</span>
+<span class="fc" id="L116">            return false;</span>
         }
-<span class="fc" id="L113">        return true;</span>
+<span class="fc" id="L118">        return true;</span>
     }
 
     public Boolean legalMoveCheckBishop(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //bishop rules check
-<span class="fc bfc" id="L118" title="All 2 branches covered.">        if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {</span>
-<span class="fc" id="L119">            return false;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {</span>
+<span class="fc" id="L124">            return false;</span>
         }
-<span class="fc" id="L121">        return true;</span>
+<span class="fc" id="L126">        return true;</span>
     }
 
     public Boolean legalMoveCheckKnight(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //knight rules check
-<span class="pc bpc" id="L126" title="1 of 4 branches missed.">        if (Math.abs(endRank - startRank) &gt; 2 || (Math.abs(endFile - startFile) &gt; 2)) {</span>
-<span class="fc" id="L127">            return false;</span>
-        }
-<span class="pc bpc" id="L129" title="1 of 4 branches missed.">        if ((Math.abs(endRank - startRank) == 2 &amp;&amp; (Math.abs(endFile - startFile) != 1))</span>
-<span class="pc bpc" id="L130" title="2 of 8 branches missed.">                || ((Math.abs(endFile - startFile) == 2) &amp;&amp; (Math.abs(endRank - startRank) != 1))</span>
-                || startRank == endRank || startFile == endFile) {
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">        if (Math.abs(endRank - startRank) &gt; 2 || (Math.abs(endFile - startFile) &gt; 2)) {</span>
 <span class="fc" id="L132">            return false;</span>
         }
-<span class="fc" id="L134">        return true;</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">        if ((Math.abs(endRank - startRank) == 2 &amp;&amp; (Math.abs(endFile - startFile) != 1))</span>
+<span class="pc bpc" id="L135" title="2 of 8 branches missed.">                || ((Math.abs(endFile - startFile) == 2) &amp;&amp; (Math.abs(endRank - startRank) != 1))</span>
+                || startRank == endRank || startFile == endFile) {
+<span class="fc" id="L137">            return false;</span>
+        }
+<span class="fc" id="L139">        return true;</span>
     }
 
     public Boolean legalMoveCheckQueen(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //queen rules check
-<span class="fc bfc" id="L139" title="All 4 branches covered.">        if (endRank != startRank &amp;&amp; endFile != startFile) {</span>
-<span class="fc bfc" id="L140" title="All 2 branches covered.">            if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {</span>
-<span class="fc" id="L141">                return false;</span>
+<span class="fc bfc" id="L144" title="All 4 branches covered.">        if (endRank != startRank &amp;&amp; endFile != startFile) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            if ((Math.abs(endRank - startRank) - Math.abs(endFile - startFile) != 0)) {</span>
+<span class="fc" id="L146">                return false;</span>
             }
         }
-<span class="fc" id="L144">        return true;</span>
+<span class="fc" id="L149">        return true;</span>
     }
 
     public Boolean legalMoveCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //king rules check
-<span class="fc bfc" id="L149" title="All 4 branches covered.">        if (Math.abs(endRank - startRank) &gt; 1 || Math.abs(endFile - startFile) &gt; 1) {</span>
-<span class="fc" id="L150">            return false;</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">        if (Math.abs(endRank - startRank) &gt; 1 || Math.abs(endFile - startFile) &gt; 1) {</span>
+<span class="fc" id="L155">            return false;</span>
         }
-<span class="fc" id="L152">        return true;</span>
+<span class="fc" id="L157">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

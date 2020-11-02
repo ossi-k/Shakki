@@ -8,11 +8,14 @@ public class Board {
     private Piece[][] board;
     private HashSet<Piece> piecesOnBoard;
     private boolean whiteToMove;
+    private int moveNumber;
 
     public Board() {
         board = new Piece[8][8];
         piecesOnBoard = new HashSet<>();
         whiteToMove = true;
+        moveNumber = 0;
+
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
                 //Mustat namiskat
@@ -85,7 +88,7 @@ public class Board {
             }
         }
     }
-    
+
     public void addNewPiece(String name, String color, int rank, int file, int value) {
         board[rank][file] = new Piece(name, color, rank, file, value);
     }
@@ -117,6 +120,23 @@ public class Board {
         return board[rank][file];
     }
 
+    public String gameOver() {
+        String endGameMessage = "Total moves left before game ends " + (50-moveNumber);
+        if (moveNumber == 2) {
+            int winner = evaluateSituation();
+            if (winner < 0) {
+                endGameMessage = "Black wins";
+            }
+            if (winner > 0) {
+                endGameMessage = "White wins";
+            } else {
+                endGameMessage = "Game is a tie";
+            }
+            return endGameMessage;
+        }
+        return endGameMessage;
+    }
+
     public void movePiece(int startRank, int startFile, int endRank, int endFile) {
         Piece piece = board[startRank][startFile];
         if ((piece.getColor().equals("white") && whiteToMove) || (piece.getColor().equals("black") && !whiteToMove)) {
@@ -126,6 +146,8 @@ public class Board {
                 board[startRank][startFile] = null;
                 board[endRank][endFile] = piece;
                 whiteToMove = !whiteToMove;
+                moveNumber += 1;
+                System.out.println(gameOver());
             } else if (board[endRank][endFile] != null && piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
                 if (board[endRank][endFile].getColor() != piece.getColor()) {
                     board[endRank][endFile].deletePiece(board[endRank][endFile]);
@@ -135,6 +157,8 @@ public class Board {
                     board[startRank][startFile] = null;
                     board[endRank][endFile] = piece;
                     whiteToMove = !whiteToMove;
+                    moveNumber += 1;
+                    System.out.println(gameOver());
                 }
             } else {
                 System.out.println("illegal move");
@@ -345,5 +369,9 @@ public class Board {
             return false;
         }
         return true;
+    }
+
+    public int getMoveNumber() {
+        return moveNumber;
     }
 }
