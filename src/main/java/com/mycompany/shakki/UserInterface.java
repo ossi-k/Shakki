@@ -6,10 +6,12 @@ public class UserInterface {
 
     private Board board;
     private Scanner scanner;
+    private Database database;
 
-    public UserInterface(Board board, Scanner scanner) {
+    public UserInterface(Board board, Scanner scanner, Database database) {
         this.board = board;
         this.scanner = scanner;
+        this.database = database;
     }
 
     public void launch() {
@@ -68,8 +70,10 @@ public class UserInterface {
 
                 board.movePiece(startRank, startFile, endRank, endFile);
                 System.out.println(board.printBoard());
-                if (board.getMoveNumber() == 2) {
+                
+                if (board.getMoveNumber() == 50) {
                     System.out.println(board.gameOver());
+                    database.insertWinner(board.getWinningSide());
                     break;
                 }
             }

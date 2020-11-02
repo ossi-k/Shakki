@@ -9,12 +9,14 @@ public class Board {
     private HashSet<Piece> piecesOnBoard;
     private boolean whiteToMove;
     private int moveNumber;
+    private String winningSide;
 
     public Board() {
         board = new Piece[8][8];
         piecesOnBoard = new HashSet<>();
         whiteToMove = true;
         moveNumber = 0;
+        winningSide = "";
 
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
@@ -122,15 +124,18 @@ public class Board {
 
     public String gameOver() {
         String endGameMessage = "Total moves left before game ends " + (50-moveNumber);
-        if (moveNumber == 2) {
-            int winner = evaluateSituation();
-            if (winner < 0) {
+        if (moveNumber == 1) {
+            int endResult = evaluateSituation();
+            if (endResult < 0) {
                 endGameMessage = "Black wins";
+                winningSide = "'Black'";
             }
-            if (winner > 0) {
+            if (endResult > 0) {
                 endGameMessage = "White wins";
+                winningSide = "'White'";
             } else {
                 endGameMessage = "Game is a tie";
+                winningSide = "'Tie'";
             }
             return endGameMessage;
         }
@@ -373,5 +378,9 @@ public class Board {
 
     public int getMoveNumber() {
         return moveNumber;
+    }
+
+    public String getWinningSide() {
+        return winningSide;
     }
 }
