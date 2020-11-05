@@ -1,6 +1,7 @@
 package com.mycompany.shakki;
 
 import com.mycompany.chess.Board;
+import com.mycompany.chess.Piece;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -62,6 +63,7 @@ public class BoardTest {
         board.deletAllPieces();
 
         board.addNewPiece("rook", "black", 4, 3, 5);
+        board.addNewPiece("rook", "black", 5, 0, 5);
         board.addNewPiece("pawn", "black", 4, 1, -1);
         board.addNewPiece("pawn", "white", 4, 6, 1);
         board.addNewPiece("pawn", "black", 1, 3, -1);
@@ -75,6 +77,10 @@ public class BoardTest {
         assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 0, 3));
         //Down
         assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 7, 3));
+        
+       
+        assertEquals(true, board.collisionCheck(board.selectPiece(5, 0), 5, 0, 5, 7));
+        
     }
 
 }
