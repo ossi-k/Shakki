@@ -128,14 +128,14 @@ public class Board {
             int endResult = evaluateSituation();
             if (endResult < 0) {
                 endGameMessage = "Black wins";
-                winningSide = "'Black'";
+                winningSide = "Black";
             }
             if (endResult > 0) {
                 endGameMessage = "White wins";
-                winningSide = "'White'";
+                winningSide = "White";
             } else {
                 endGameMessage = "Game is a tie";
-                winningSide = "'Tie'";
+                winningSide = "Tie";
             }
             return endGameMessage;
         }
@@ -184,7 +184,7 @@ public class Board {
         if (piece.getName().equals("queen")) {
             return collissionCheckQueen(piece, startRank, startFile, endRank, endFile);
         }
-        if (piece.getName().equals("king")) {
+        if (piece.getName().toLowerCase().equals("king")) {
             return collisionCheckKing(piece, startRank, startFile, endRank, endFile);
         }
         return true;
@@ -370,7 +370,8 @@ public class Board {
     }
 
     public boolean collisionCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        if (board[endRank][endFile] != null && board[endRank][endFile].getColor() == piece.getColor()) {
+        if (board[endRank][endFile] != null /*&& board[endRank][endFile].getColor() == piece.getColor()*/) {
+            System.out.println("Move blocked by another piece");
             return false;
         }
         return true;

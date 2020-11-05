@@ -57,7 +57,7 @@ public class Database {
             String select = "SELECT MAX(GAME)AS GAME FROM WINHISTORY;";
             ResultSet maxGame = endingStmt.executeQuery(select);
 
-            String insertWinner = "UPDATE WINHISTORY SET VICTOR =" + winningSide + "WHERE GAME =" + maxGame.getInt("GAME");
+            String insertWinner = "UPDATE WINHISTORY SET VICTOR =" + "'" + winningSide + "'" + "WHERE GAME =" + maxGame.getInt("GAME");
             endingStmt.executeUpdate(insertWinner);
             endingC.commit();
 
