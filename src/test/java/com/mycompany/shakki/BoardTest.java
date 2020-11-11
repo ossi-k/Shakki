@@ -177,7 +177,6 @@ public class BoardTest {
         System.out.println(board.printBoard());
         board.movePiece(4, 3, 4, 2);
         System.out.println("winning side after moving: " + board.getWinningSide());
-
         assertEquals("White", board.getWinningSide());
     }
 

@@ -22,14 +22,21 @@ public class UserInterface {
             System.out.println("3 - Evaluate current situation");
             System.out.println("4 - Quit");
             System.out.println("99 - Delete all pieces");
+            System.out.println("97 - Show graphical board");
 
             int input = Integer.valueOf(scanner.nextLine());
 
             if (input == 99) {
                 board.deletAllPieces();
             }
+            
+            if (input == 97) {
+                GraphicalUserInterface gui = new GraphicalUserInterface();
+                gui.start();
+            }
             //bishop capturing white king
-            if (input == 98) {
+            //for manual testin only
+            /*if (input == 98) {
                 board.movePiece(6, 3, 5, 3);
                 System.out.println(board.printBoard());
                 board.movePiece(1, 4, 2, 4);
@@ -46,7 +53,7 @@ public class UserInterface {
                     database.insertWinner(board.getWinningSide());
                     break;
                 }
-            }
+            }*/
 
             if (input == 1) {
                 System.out.println(board.printBoard());
