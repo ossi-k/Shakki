@@ -28,6 +28,25 @@ public class UserInterface {
             if (input == 99) {
                 board.deletAllPieces();
             }
+            //bishop capturing white king
+            if (input == 98) {
+                board.movePiece(6, 3, 5, 3);
+                System.out.println(board.printBoard());
+                board.movePiece(1, 4, 2, 4);
+                System.out.println(board.printBoard());
+                board.movePiece(6, 0, 5, 0);
+                System.out.println(board.printBoard());
+                board.movePiece(0, 5, 4, 1);
+                System.out.println(board.printBoard());
+                board.movePiece(5, 0, 4, 0);
+                System.out.println(board.printBoard());
+                board.movePiece(4, 1, 7, 4);
+                if (board.getMoveNumber() == 50 || board.isBlackKingOnBoard() == false || board.isWhiteKingOnBoard() == false) {
+                    System.out.println(board.gameOver());
+                    database.insertWinner(board.getWinningSide());
+                    break;
+                }
+            }
 
             if (input == 1) {
                 System.out.println(board.printBoard());
@@ -70,8 +89,8 @@ public class UserInterface {
 
                 board.movePiece(startRank, startFile, endRank, endFile);
                 System.out.println(board.printBoard());
-                
-                if (board.getMoveNumber() == 50) {
+
+                if (board.getMoveNumber() == 50 || board.isBlackKingOnBoard() == false || board.isWhiteKingOnBoard() == false) {
                     System.out.println(board.gameOver());
                     database.insertWinner(board.getWinningSide());
                     break;

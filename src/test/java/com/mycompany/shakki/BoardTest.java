@@ -2,6 +2,7 @@ package com.mycompany.shakki;
 
 import com.mycompany.chess.Board;
 import com.mycompany.chess.Piece;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -53,7 +54,7 @@ public class BoardTest {
 
         assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 4, 4));
         //technically the move below this line should be a piece capture
-        assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 4, 2));
+        //assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 4, 2));
         assertEquals(false, board.collisionCheck(board.selectPiece(4, 3), 4, 3, 3, 3));
     }
 
@@ -163,6 +164,38 @@ public class BoardTest {
         //right
         assertEquals(false, board.collisionCheck(board.selectPiece(5, 5), 5, 5, 5, 7));
 
+    }
+
+    @Test
+    public void whiteWinsByCapturingWhiteKing() {
+        Board board = new Board();
+        board.deletAllPieces();
+        System.out.println(board.printBoard());
+        System.out.println("winning side: " + board.getWinningSide());
+        board.addNewPiece("queen", "white", 4, 3, -9);
+        board.addNewPiece("King", "black", 4, 2, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(4, 3, 4, 2);
+        System.out.println("winning side after moving: " + board.getWinningSide());
+
+        assertEquals("White", board.getWinningSide());
+    }
+
+    @Test
+    public void blackWinsByCapturingWhiteKing() {
+        Board board = new Board();
+        board.deletAllPieces();
+        board.setWhiteToMove(false);
+        
+        System.out.println(board.printBoard());
+        System.out.println("winning side: " + board.getWinningSide());
+        board.addNewPiece("queen", "black", 4, 3, -9);
+        board.addNewPiece("King", "white", 4, 2, 0);
+        System.out.println(board.printBoard());
+        board.movePiece(4, 3, 4, 2);
+        System.out.println("winning side after moving: " + board.getWinningSide());
+
+        assertEquals("Black", board.getWinningSide());
     }
 
 }
