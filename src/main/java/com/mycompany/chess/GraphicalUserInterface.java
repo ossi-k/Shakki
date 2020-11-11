@@ -5,8 +5,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class GraphicalUserInterface extends Application {
+
+    private Board board;
 
     @Override
     public void start(Stage window) {
@@ -16,32 +20,94 @@ public class GraphicalUserInterface extends Application {
             for (int file = 0; file < 8; file++) {
                 //Mustat namiskat
                 if (rank == 0 && (file == 0 || file == 7)) {
-                    chessBoard.add(new Button("br"), file, rank);
+                    Image image = new Image("file:black_rook.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 0 && (file == 1 || file == 6)) {
-                    chessBoard.add(new Button("bk"), file, rank);
+                    Image image = new Image("file:black_knight.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 0 && (file == 2 || file == 5)) {
-                    chessBoard.add(new Button("bb"), file, rank);
+                    Image image = new Image("file:black_bishop.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 0 && file == 3) {
-                    chessBoard.add(new Button("bq"), file, rank);
+                    Image image = new Image("file:black_queen.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 0 && file == 4) {
-                    chessBoard.add(new Button("bK"), file, rank);
+                    Image image = new Image("file:black_king.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 1) {
-                    chessBoard.add(new Button("bp"), file, rank);
+                    Image image = new Image("file:black_pawn.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } //valkoiset namiskat
                 else if (rank == 7 && (file == 0 || file == 7)) {
-                    chessBoard.add(new Button("wr"), file, rank);
+                    Image image = new Image("file:white_rook.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 7 && (file == 1 || file == 6)) {
-                    chessBoard.add(new Button("wk"), file, rank);
+                    Image image = new Image("file:white_knight.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 7 && (file == 2 || file == 5)) {
-                    chessBoard.add(new Button("wb"), file, rank);
+                    Image image = new Image("file:white_bishop.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 7 && file == 3) {
-                    chessBoard.add(new Button("wq"), file, rank);
+                    Image image = new Image("file:white_queen.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 7 && file == 4) {
-                    chessBoard.add(new Button("wK"), file, rank);
+                    Image image = new Image("file:white_King.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else if (rank == 6) {
-                    chessBoard.add(new Button("wp"), file, rank);
+                    Image image = new Image("file:white_pawn.png");
+                    ImageView imageview = new ImageView(image);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    button.setGraphic(imageview);
+                    chessBoard.add(button, file, rank);
                 } else {
-                    chessBoard.add(new Button("00"), file, rank);
+                    Button button = new Button();
+                    button.setPrefSize(80, 80);
+                    chessBoard.add(button, file, rank);
                 }
             }
         }
@@ -52,7 +118,7 @@ public class GraphicalUserInterface extends Application {
         window.show();
     }
 
-    public static void start() {
+    public static void launcUi() {
         launch(GraphicalUserInterface.class);
     }
 
