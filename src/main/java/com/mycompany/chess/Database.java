@@ -22,7 +22,7 @@ public class Database {
             //Create a new victory book keeping table, if it doesn't exist
             String query = "CREATE TABLE IF NOT EXISTS WINHISTORY "
                     + "(GAME INT PRIMARY KEY NOT NULL,"
-                    + "VICTOR CHAR(50));";
+                    + "WINNER CHAR(50));";
             stmt.executeUpdate(query);
 
             //Select the max game number, increment it by one and insert the
@@ -57,7 +57,7 @@ public class Database {
             String select = "SELECT MAX(GAME)AS GAME FROM WINHISTORY;";
             ResultSet maxGame = endingStmt.executeQuery(select);
 
-            String insertWinner = "UPDATE WINHISTORY SET VICTOR =" + "'" + winningSide + "'" + "WHERE GAME =" + maxGame.getInt("GAME");
+            String insertWinner = "UPDATE WINHISTORY SET WINNER =" + "'" + winningSide + "'" + "WHERE GAME =" + maxGame.getInt("GAME");
             endingStmt.executeUpdate(insertWinner);
             endingC.commit();
 
