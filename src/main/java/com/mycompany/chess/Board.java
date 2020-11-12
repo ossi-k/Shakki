@@ -142,7 +142,7 @@ public class Board {
                 endGameMessage = "Game is a tie";
                 winningSide = "Tie";
             }
-            return endGameMessage;
+            //return endGameMessage;
         }
         return endGameMessage;
     }

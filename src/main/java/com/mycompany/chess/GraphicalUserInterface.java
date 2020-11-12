@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javax.swing.text.Position;
 
 public class GraphicalUserInterface extends Application {
-    
+
     GridPane chessBoard = new GridPane();
     Database database;
     private Board board;
@@ -68,9 +68,14 @@ public class GraphicalUserInterface extends Application {
                 endRank = GridPane.getRowIndex(button);
                 endFile = GridPane.getColumnIndex(button);
                 board.movePiece(startRank, startFile, endRank, endFile);
-                drawChessBoard(chessBoard);
-                clickcounter = 0;
-
+                if (board.getMoveNumber() == 50 || board.isBlackKingOnBoard() == false || board.isWhiteKingOnBoard() == false) {
+                    System.out.println(board.gameOver());
+                    database.insertWinner(board.getWinningSide());
+                    System.exit(0);
+                } else {
+                    drawChessBoard(chessBoard);
+                    clickcounter = 0;
+                }
             }
         });
     }
