@@ -32,7 +32,7 @@ public class UserInterface {
             
             if (input == 97) {
                 GraphicalUserInterface gui = new GraphicalUserInterface();
-                gui.launcUi();
+                gui.launchUi();
             }
             //bishop capturing white king
             //for manual testin only
