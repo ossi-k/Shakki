@@ -33,7 +33,7 @@ public class GraphicalUserInterface extends Application {
 
     @Override
     public void start(Stage window) {
-        
+        //test
         drawChessBoard(chessBoard);
 
         Scene view = new Scene(chessBoard);
@@ -56,10 +56,8 @@ public class GraphicalUserInterface extends Application {
     public void getCoordinates(Button button) {
         button.setOnAction((event) -> {
             if (clickcounter == 0) {
-                System.out.println("clickcounter before clicking: " + clickcounter);
                 startRank = GridPane.getRowIndex(button);
                 startFile = GridPane.getColumnIndex(button);
-                System.out.println("clickcounter after clicking: " + clickcounter);
                 if (board.selectPiece(startRank, startFile) == null) {
                     System.out.println("There is no piece in that square.");
                     System.out.println("Please select a proper piece.");
@@ -67,17 +65,13 @@ public class GraphicalUserInterface extends Application {
                     clickcounter += 1;
                 }
             } else if (clickcounter == 1) {
-                System.out.println("clickcounter before clicking: " + clickcounter);
                 endRank = GridPane.getRowIndex(button);
                 endFile = GridPane.getColumnIndex(button);
                 board.movePiece(startRank, startFile, endRank, endFile);
                 drawChessBoard(chessBoard);
-                System.out.println("clickcounter after clicking: " + clickcounter);
                 clickcounter = 0;
 
             }
-            System.out.println("file: " + GridPane.getColumnIndex(button));
-            System.out.println("rank: " + GridPane.getRowIndex(button));
         });
     }
 
