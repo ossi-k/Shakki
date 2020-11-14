@@ -1,4 +1,4 @@
-package com.mycompany.chess;
+/*package com.mycompany.chess;
 
 import java.util.Scanner;
 
@@ -36,7 +36,7 @@ public class UserInterface {
             }
             //bishop capturing white king
             //for manual testin only
-            /*if (input == 98) {
+            if (input == 98) {
                 board.movePiece(6, 3, 5, 3);
                 System.out.println(board.printBoard());
                 board.movePiece(1, 4, 2, 4);
@@ -53,7 +53,7 @@ public class UserInterface {
                     database.insertWinner(board.getWinningSide());
                     break;
                 }
-            }*/
+            }
 
             if (input == 1) {
                 System.out.println(board.printBoard());
@@ -123,4 +123,4 @@ public class UserInterface {
         }
     }
 
-}
+}*/

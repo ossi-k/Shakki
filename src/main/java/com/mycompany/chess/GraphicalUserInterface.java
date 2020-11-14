@@ -23,7 +23,7 @@ public class GraphicalUserInterface extends Application {
 
     public GraphicalUserInterface() {
         this.board = new Board();
-        this.database = new Database();
+        //this.database = new Database();
         this.clickcounter = 0;
         this.startRank = 0;
         this.startFile = 0;
@@ -34,6 +34,8 @@ public class GraphicalUserInterface extends Application {
     @Override
     public void start(Stage window) {
         //test
+        this.database = new Database();
+        
         drawChessBoard(chessBoard);
 
         Scene view = new Scene(chessBoard);
