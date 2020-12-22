@@ -131,11 +131,10 @@ public class Board {
         String endGameMessage = "Total moves left before game ends " + (50 - moveNumber);
         if (moveNumber == 50 || !blackKingOnBoard || !whiteKingOnBoard) {
             int endResult = evaluateSituation();
-            if (endResult < 0 ||!whiteKingOnBoard) {
+            if (endResult < 0 || !whiteKingOnBoard) {
                 endGameMessage = "Black wins";
                 winningSide = "Black";
-            }
-            else if (endResult > 0 || !blackKingOnBoard) {
+            } else if (endResult > 0 || !blackKingOnBoard) {
                 endGameMessage = "White wins";
                 winningSide = "White";
             } else {
@@ -150,6 +149,29 @@ public class Board {
     public void movePiece(int startRank, int startFile, int endRank, int endFile) {
         Piece piece = board[startRank][startFile];
         if ((piece.getColor().equals("white") && whiteToMove) || (piece.getColor().equals("black") && !whiteToMove)) {
+            //check if the piece to be moved is a pawn and pawn is used for capture and call the correct method, if this is the case
+            if (piece.getName().equals("pawn") && board[endRank][endFile] != null && piece.legalMoveCheckPawnCapture(piece, startRank, startFile, endRank, endFile) /*&& collisionCheck(piece, startRank, startFile, endRank, endFile)*/) {
+                if (board[endRank][endFile].getName().toLowerCase().equals("king")) {
+                    if (board[endRank][endFile].getColor().equals("white")) {
+                        whiteKingOnBoard = false;
+                    } else if (board[endRank][endFile].getColor().equals("black")) {
+                        blackKingOnBoard = false;
+                    }
+                }
+                board[endRank][endFile].deletePiece(board[endRank][endFile]);
+                piecesOnBoard.remove(board[endRank][endFile]);
+                piece.setFile(endFile);
+                piece.setRank(endRank);
+                board[startRank][startFile] = null;
+                board[endRank][endFile] = piece;
+                whiteToMove = !whiteToMove;
+                moveNumber += 1;
+                if (piece.isFirstMove()) {
+                    piece.setFirstMove();
+                }
+                System.out.println(gameOver());
+            }
+
             if (board[endRank][endFile] == null && piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
                 piece.setFile(endFile);
                 piece.setRank(endRank);
@@ -157,6 +179,9 @@ public class Board {
                 board[endRank][endFile] = piece;
                 whiteToMove = !whiteToMove;
                 moveNumber += 1;
+                if (piece.isFirstMove()) {
+                    piece.setFirstMove();
+                }
                 System.out.println(gameOver());
             } else if (board[endRank][endFile] != null && piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) && collisionCheck(piece, startRank, startFile, endRank, endFile)) {
                 if (board[endRank][endFile].getColor() != piece.getColor()) {
@@ -175,6 +200,9 @@ public class Board {
                     board[endRank][endFile] = piece;
                     whiteToMove = !whiteToMove;
                     moveNumber += 1;
+                    if (piece.isFirstMove()) {
+                        piece.setFirstMove();
+                    }
                     System.out.println(gameOver());
                 }
             } else {

@@ -166,4 +166,12 @@ public class PieceTest {
         assertEquals(false, whiteKing.legalMoveCheck(whiteKing, 4, 3, 1, 3));
         assertEquals(false, whiteKing.legalMoveCheck(whiteKing, 4, 3, 7, 3));
     }
+    
+    @Test
+    public void firstMove() {
+        Piece whitePawn = new Piece("pawn", "white", 6, 0, 1);
+        assertEquals(true, whitePawn.legalMoveCheck(whitePawn, 6, 0, 4, 0));
+        whitePawn.setFirstMove();
+        assertEquals(false, whitePawn.legalMoveCheck(whitePawn, 6, 0, 4, 0));
+    }
 }

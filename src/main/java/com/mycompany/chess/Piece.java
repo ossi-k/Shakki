@@ -12,6 +12,7 @@ public class Piece {
     private int rank;
     private int file;
     private int value;
+    private boolean firstMove;
 
     public Piece(String name, String color, int rank, int file, int value) {
         this.name = name;
@@ -19,6 +20,7 @@ public class Piece {
         this.rank = rank;
         this.file = file;
         this.value = value;
+        this.firstMove = true;
     }
 
     public String getNameAndColor() {
@@ -53,9 +55,16 @@ public class Piece {
         this.file = file;
     }
 
-    
     public void deletePiece(Piece piece) {
         piece = null;
+    }
+
+    public boolean isFirstMove() {
+        return firstMove;
+    }
+
+    public void setFirstMove() {
+        this.firstMove = !firstMove;
     }
 
     public Boolean legalMoveCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
@@ -92,11 +101,27 @@ public class Piece {
         if (piece.getName().toLowerCase().equals("king")) {
             return legalMoveCheckKing(piece, startRank, startFile, endRank, endFile);
         }
+        if (piece.firstMove == true) {
+            piece.firstMove = false;
+        }
         return true;
     }
 
     public Boolean legalMoveCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-        //pawn rules check, moving two squares as first move currently not possible
+        //if the piece has already moved, moving more than one square is not allowed
+        if (piece.isFirstMove()) {
+            if (piece.getColor().equals("black")) {
+                if ((endRank <= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 2) {
+                    return false;
+                }
+            }
+            if (piece.getColor().equals("white")) {
+                if ((endRank >= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 2) {
+                    return false;
+                }
+            }
+        }
+        if (!piece.isFirstMove()) {
         if (piece.getColor().equals("black")) {
             if ((endRank <= startRank || endFile != startFile) || Math.abs(endRank - startRank) > 1) {
                 return false;
@@ -107,7 +132,22 @@ public class Piece {
                 return false;
             }
         }
+        }
         return true;
+    }
+
+    public Boolean legalMoveCheckPawnCapture(Piece piece, int startRank, int startFile, int endRank, int endFile) {
+        if (piece.getColor().equals("black")) {
+            if (endRank >= startRank && Math.abs(endFile - startFile) == 1) {
+                return true;
+            }
+        }
+        if (piece.getColor().equals("white")) {
+            if (endRank <= startRank && Math.abs(endFile - startFile) == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Boolean legalMoveCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {

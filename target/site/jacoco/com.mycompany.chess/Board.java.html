@@ -10,379 +10,404 @@ public class Board {
     private boolean whiteToMove;
     private int moveNumber;
     private String winningSide;
+    private boolean whiteKingOnBoard;
+    private boolean blackKingOnBoard;
 
-<span class="fc" id="L14">    public Board() {</span>
-<span class="fc" id="L15">        board = new Piece[8][8];</span>
-<span class="fc" id="L16">        piecesOnBoard = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L17">        whiteToMove = true;</span>
-<span class="fc" id="L18">        moveNumber = 0;</span>
-<span class="fc" id="L19">        winningSide = &quot;&quot;;</span>
+<span class="fc" id="L16">    public Board() {</span>
+<span class="fc" id="L17">        board = new Piece[8][8];</span>
+<span class="fc" id="L18">        piecesOnBoard = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L19">        whiteToMove = true;</span>
+<span class="fc" id="L20">        moveNumber = 0;</span>
+<span class="fc" id="L21">        winningSide = &quot;&quot;;</span>
+<span class="fc" id="L22">        whiteKingOnBoard = true;</span>
+<span class="fc" id="L23">        blackKingOnBoard = true;</span>
 
-<span class="fc bfc" id="L21" title="All 2 branches covered.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
-<span class="fc bfc" id="L22" title="All 2 branches covered.">            for (int file = 0; file &lt; 8; file++) {</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            for (int file = 0; file &lt; 8; file++) {</span>
                 //Mustat namiskat
-<span class="fc bfc" id="L24" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 0 || file == 7)) {</span>
-<span class="fc" id="L25">                    board[rank][file] = new Piece(&quot;rook&quot;, &quot;black&quot;, rank, file, -5);</span>
-<span class="fc" id="L26">                    piecesOnBoard.add(board[rank][file]);</span>
-                }
-<span class="fc bfc" id="L28" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 1 || file == 6)) {</span>
-<span class="fc" id="L29">                    board[rank][file] = new Piece(&quot;knight&quot;, &quot;black&quot;, rank, file, -3);</span>
+<span class="fc bfc" id="L28" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 0 || file == 7)) {</span>
+<span class="fc" id="L29">                    board[rank][file] = new Piece(&quot;rook&quot;, &quot;black&quot;, rank, file, -5);</span>
 <span class="fc" id="L30">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L32" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 2 || file == 5)) {</span>
-<span class="fc" id="L33">                    board[rank][file] = new Piece(&quot;bishop&quot;, &quot;black&quot;, rank, file, -3);</span>
+<span class="fc bfc" id="L32" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 1 || file == 6)) {</span>
+<span class="fc" id="L33">                    board[rank][file] = new Piece(&quot;knight&quot;, &quot;black&quot;, rank, file, -3);</span>
 <span class="fc" id="L34">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L36" title="All 4 branches covered.">                if (rank == 0 &amp;&amp; file == 3) {</span>
-<span class="fc" id="L37">                    board[rank][file] = new Piece(&quot;queen&quot;, &quot;black&quot;, rank, file, -9);</span>
+<span class="fc bfc" id="L36" title="All 6 branches covered.">                if (rank == 0 &amp;&amp; (file == 2 || file == 5)) {</span>
+<span class="fc" id="L37">                    board[rank][file] = new Piece(&quot;bishop&quot;, &quot;black&quot;, rank, file, -3);</span>
 <span class="fc" id="L38">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L40" title="All 4 branches covered.">                if (rank == 0 &amp;&amp; file == 4) {</span>
-<span class="fc" id="L41">                    board[rank][file] = new Piece(&quot;King&quot;, &quot;black&quot;, rank, file, 0);</span>
+<span class="fc bfc" id="L40" title="All 4 branches covered.">                if (rank == 0 &amp;&amp; file == 3) {</span>
+<span class="fc" id="L41">                    board[rank][file] = new Piece(&quot;queen&quot;, &quot;black&quot;, rank, file, -9);</span>
 <span class="fc" id="L42">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (rank == 1) {</span>
-<span class="fc" id="L45">                    board[rank][file] = new Piece(&quot;pawn&quot;, &quot;black&quot;, rank, file, -1);</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">                if (rank == 0 &amp;&amp; file == 4) {</span>
+<span class="fc" id="L45">                    board[rank][file] = new Piece(&quot;King&quot;, &quot;black&quot;, rank, file, 0);</span>
 <span class="fc" id="L46">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-                //valkoiset namiskat
-<span class="fc bfc" id="L49" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 0 || file == 7)) {</span>
-<span class="fc" id="L50">                    board[rank][file] = new Piece(&quot;rook&quot;, &quot;white&quot;, rank, file, 5);</span>
-<span class="fc" id="L51">                    piecesOnBoard.add(board[rank][file]);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (rank == 1) {</span>
+<span class="fc" id="L49">                    board[rank][file] = new Piece(&quot;pawn&quot;, &quot;black&quot;, rank, file, -1);</span>
+<span class="fc" id="L50">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L53" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 1 || file == 6)) {</span>
-<span class="fc" id="L54">                    board[rank][file] = new Piece(&quot;knight&quot;, &quot;white&quot;, rank, file, 3);</span>
+                //valkoiset namiskat
+<span class="fc bfc" id="L53" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 0 || file == 7)) {</span>
+<span class="fc" id="L54">                    board[rank][file] = new Piece(&quot;rook&quot;, &quot;white&quot;, rank, file, 5);</span>
 <span class="fc" id="L55">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L57" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 2 || file == 5)) {</span>
-<span class="fc" id="L58">                    board[rank][file] = new Piece(&quot;bishop&quot;, &quot;white&quot;, rank, file, 3);</span>
+<span class="fc bfc" id="L57" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 1 || file == 6)) {</span>
+<span class="fc" id="L58">                    board[rank][file] = new Piece(&quot;knight&quot;, &quot;white&quot;, rank, file, 3);</span>
 <span class="fc" id="L59">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L61" title="All 4 branches covered.">                if (rank == 7 &amp;&amp; file == 3) {</span>
-<span class="fc" id="L62">                    board[rank][file] = new Piece(&quot;queen&quot;, &quot;white&quot;, rank, file, 9);</span>
+<span class="fc bfc" id="L61" title="All 6 branches covered.">                if (rank == 7 &amp;&amp; (file == 2 || file == 5)) {</span>
+<span class="fc" id="L62">                    board[rank][file] = new Piece(&quot;bishop&quot;, &quot;white&quot;, rank, file, 3);</span>
 <span class="fc" id="L63">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L65" title="All 4 branches covered.">                if (rank == 7 &amp;&amp; file == 4) {</span>
-<span class="fc" id="L66">                    board[rank][file] = new Piece(&quot;King&quot;, &quot;white&quot;, rank, file, 0);</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">                if (rank == 7 &amp;&amp; file == 3) {</span>
+<span class="fc" id="L66">                    board[rank][file] = new Piece(&quot;queen&quot;, &quot;white&quot;, rank, file, 9);</span>
 <span class="fc" id="L67">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
-<span class="fc bfc" id="L69" title="All 2 branches covered.">                if (rank == 6) {</span>
-<span class="fc" id="L70">                    board[rank][file] = new Piece(&quot;pawn&quot;, &quot;white&quot;, rank, file, 1);</span>
+<span class="fc bfc" id="L69" title="All 4 branches covered.">                if (rank == 7 &amp;&amp; file == 4) {</span>
+<span class="fc" id="L70">                    board[rank][file] = new Piece(&quot;King&quot;, &quot;white&quot;, rank, file, 0);</span>
 <span class="fc" id="L71">                    piecesOnBoard.add(board[rank][file]);</span>
                 }
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                if (rank == 6) {</span>
+<span class="fc" id="L74">                    board[rank][file] = new Piece(&quot;pawn&quot;, &quot;white&quot;, rank, file, 1);</span>
+<span class="fc" id="L75">                    piecesOnBoard.add(board[rank][file]);</span>
+                }
             }
         }
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L79">    }</span>
 
     public boolean isWhiteToMove() {
-<span class="nc" id="L78">        return whiteToMove;</span>
+<span class="nc" id="L82">        return whiteToMove;</span>
     }
 
+    //utility method used for testing etc, no need to change the value of black and white king booleans to false
     public void deletAllPieces() {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">            for (int file = 0; file &lt; 8; file++) {</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L85">                    Piece piece = board[rank][file];</span>
-<span class="fc" id="L86">                    piece.deletePiece(piece);</span>
-<span class="fc" id="L87">                    board[rank][file] = null;</span>
-<span class="fc" id="L88">                    piecesOnBoard.remove(piece);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            for (int file = 0; file &lt; 8; file++) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L90">                    Piece piece = board[rank][file];</span>
+<span class="fc" id="L91">                    piece.deletePiece(piece);</span>
+<span class="fc" id="L92">                    board[rank][file] = null;</span>
+<span class="fc" id="L93">                    piecesOnBoard.remove(piece);</span>
                 }
             }
         }
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L97">    }</span>
 
     public void addNewPiece(String name, String color, int rank, int file, int value) {
-<span class="fc" id="L95">        board[rank][file] = new Piece(name, color, rank, file, value);</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L100">        board[rank][file] = new Piece(name, color, rank, file, value);</span>
+<span class="fc" id="L101">    }</span>
 
     public String printBoard() {
-<span class="nc" id="L99">        String position = &quot;&quot;;</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">            for (int file = 0; file &lt; 8; file++) {</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">                if (board[rank][file] != null) {</span>
-<span class="nc" id="L103">                    position += board[rank][file].getNameAndColor().substring(0, 1) + board[rank][file].getNameAndColor().substring(6, 7) + &quot; &quot;;</span>
+<span class="fc" id="L104">        String position = &quot;&quot;;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            for (int file = 0; file &lt; 8; file++) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L108">                    position += board[rank][file].getNameAndColor().substring(0, 1) + board[rank][file].getNameAndColor().substring(6, 7) + &quot; &quot;;</span>
                 } else {
-<span class="nc" id="L105">                    position += &quot; 0 &quot;;</span>
+<span class="fc" id="L110">                    position += &quot; 0 &quot;;</span>
                 }
             }
-<span class="nc" id="L108">            position += &quot;\n&quot;;</span>
+<span class="fc" id="L113">            position += &quot;\n&quot;;</span>
         }
-<span class="nc" id="L110">        return position;</span>
+<span class="fc" id="L115">        return position;</span>
     }
 
     public int evaluateSituation() {
-<span class="nc" id="L114">        int sum = 0;</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (Piece piece : piecesOnBoard) {</span>
-<span class="nc" id="L116">            sum += piece.getValue();</span>
-<span class="nc" id="L117">        }</span>
-<span class="nc" id="L118">        return sum;</span>
+<span class="fc" id="L119">        int sum = 0;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        for (Piece piece : piecesOnBoard) {</span>
+<span class="nc" id="L121">            sum += piece.getValue();</span>
+<span class="nc" id="L122">        }</span>
+<span class="fc" id="L123">        return sum;</span>
     }
 
     public Piece selectPiece(int rank, int file) {
-<span class="fc" id="L122">        return board[rank][file];</span>
+<span class="fc" id="L127">        return board[rank][file];</span>
     }
 
     public String gameOver() {
-<span class="nc" id="L126">        String endGameMessage = &quot;Total moves left before game ends &quot; + (50-moveNumber);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (moveNumber == 50) {</span>
-<span class="nc" id="L128">            int endResult = evaluateSituation();</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (endResult &lt; 0) {</span>
-<span class="nc" id="L130">                endGameMessage = &quot;Black wins&quot;;</span>
-<span class="nc" id="L131">                winningSide = &quot;Black&quot;;</span>
+<span class="fc" id="L131">        String endGameMessage = &quot;Total moves left before game ends &quot; + (50 - moveNumber);</span>
+<span class="pc bpc" id="L132" title="2 of 6 branches missed.">        if (moveNumber == 50 || !blackKingOnBoard || !whiteKingOnBoard) {</span>
+<span class="fc" id="L133">            int endResult = evaluateSituation();</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">            if (endResult &lt; 0 ||!whiteKingOnBoard) {</span>
+<span class="fc" id="L135">                endGameMessage = &quot;Black wins&quot;;</span>
+<span class="fc" id="L136">                winningSide = &quot;Black&quot;;</span>
             }
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (endResult &gt; 0) {</span>
-<span class="nc" id="L134">                endGameMessage = &quot;White wins&quot;;</span>
-<span class="nc" id="L135">                winningSide = &quot;White&quot;;</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">            else if (endResult &gt; 0 || !blackKingOnBoard) {</span>
+<span class="fc" id="L139">                endGameMessage = &quot;White wins&quot;;</span>
+<span class="fc" id="L140">                winningSide = &quot;White&quot;;</span>
             } else {
-<span class="nc" id="L137">                endGameMessage = &quot;Game is a tie&quot;;</span>
-<span class="nc" id="L138">                winningSide = &quot;Tie&quot;;</span>
+<span class="nc" id="L142">                endGameMessage = &quot;Game is a tie&quot;;</span>
+<span class="nc" id="L143">                winningSide = &quot;Tie&quot;;</span>
             }
-<span class="nc" id="L140">            return endGameMessage;</span>
+            //return endGameMessage;
         }
-<span class="nc" id="L142">        return endGameMessage;</span>
+<span class="fc" id="L147">        return endGameMessage;</span>
     }
 
     public void movePiece(int startRank, int startFile, int endRank, int endFile) {
-<span class="nc" id="L146">        Piece piece = board[startRank][startFile];</span>
-<span class="nc bnc" id="L147" title="All 8 branches missed.">        if ((piece.getColor().equals(&quot;white&quot;) &amp;&amp; whiteToMove) || (piece.getColor().equals(&quot;black&quot;) &amp;&amp; !whiteToMove)) {</span>
-<span class="nc bnc" id="L148" title="All 6 branches missed.">            if (board[endRank][endFile] == null &amp;&amp; piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) &amp;&amp; collisionCheck(piece, startRank, startFile, endRank, endFile)) {</span>
-<span class="nc" id="L149">                piece.setFile(endFile);</span>
-<span class="nc" id="L150">                piece.setRank(endRank);</span>
-<span class="nc" id="L151">                board[startRank][startFile] = null;</span>
-<span class="nc" id="L152">                board[endRank][endFile] = piece;</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">                whiteToMove = !whiteToMove;</span>
-<span class="nc" id="L154">                moveNumber += 1;</span>
-<span class="nc" id="L155">                System.out.println(gameOver());</span>
-<span class="nc bnc" id="L156" title="All 6 branches missed.">            } else if (board[endRank][endFile] != null &amp;&amp; piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) &amp;&amp; collisionCheck(piece, startRank, startFile, endRank, endFile)) {</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">                if (board[endRank][endFile].getColor() != piece.getColor()) {</span>
-<span class="nc" id="L158">                    board[endRank][endFile].deletePiece(board[endRank][endFile]);</span>
-<span class="nc" id="L159">                    piecesOnBoard.remove(board[endRank][endFile]);</span>
-<span class="nc" id="L160">                    piece.setFile(endFile);</span>
-<span class="nc" id="L161">                    piece.setRank(endRank);</span>
-<span class="nc" id="L162">                    board[startRank][startFile] = null;</span>
-<span class="nc" id="L163">                    board[endRank][endFile] = piece;</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">                    whiteToMove = !whiteToMove;</span>
-<span class="nc" id="L165">                    moveNumber += 1;</span>
-<span class="nc" id="L166">                    System.out.println(gameOver());</span>
+<span class="fc" id="L151">        Piece piece = board[startRank][startFile];</span>
+<span class="pc bpc" id="L152" title="3 of 8 branches missed.">        if ((piece.getColor().equals(&quot;white&quot;) &amp;&amp; whiteToMove) || (piece.getColor().equals(&quot;black&quot;) &amp;&amp; !whiteToMove)) {</span>
+<span class="pc bpc" id="L153" title="5 of 6 branches missed.">            if (board[endRank][endFile] == null &amp;&amp; piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) &amp;&amp; collisionCheck(piece, startRank, startFile, endRank, endFile)) {</span>
+<span class="nc" id="L154">                piece.setFile(endFile);</span>
+<span class="nc" id="L155">                piece.setRank(endRank);</span>
+<span class="nc" id="L156">                board[startRank][startFile] = null;</span>
+<span class="nc" id="L157">                board[endRank][endFile] = piece;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                whiteToMove = !whiteToMove;</span>
+<span class="nc" id="L159">                moveNumber += 1;</span>
+<span class="nc" id="L160">                System.out.println(gameOver());</span>
+<span class="pc bpc" id="L161" title="3 of 6 branches missed.">            } else if (board[endRank][endFile] != null &amp;&amp; piece.legalMoveCheck(piece, startRank, startFile, endRank, endFile) &amp;&amp; collisionCheck(piece, startRank, startFile, endRank, endFile)) {</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                if (board[endRank][endFile].getColor() != piece.getColor()) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                    if (board[endRank][endFile].getName().toLowerCase().equals(&quot;king&quot;)) {</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">                        if (board[endRank][endFile].getColor().equals(&quot;white&quot;)) {</span>
+<span class="fc" id="L165">                            whiteKingOnBoard = false;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                        } else if (board[endRank][endFile].getColor().equals(&quot;black&quot;)) {</span>
+<span class="fc" id="L167">                            blackKingOnBoard = false;</span>
+                        }
+                    }
+<span class="fc" id="L170">                    board[endRank][endFile].deletePiece(board[endRank][endFile]);</span>
+<span class="fc" id="L171">                    piecesOnBoard.remove(board[endRank][endFile]);</span>
+<span class="fc" id="L172">                    piece.setFile(endFile);</span>
+<span class="fc" id="L173">                    piece.setRank(endRank);</span>
+<span class="fc" id="L174">                    board[startRank][startFile] = null;</span>
+<span class="fc" id="L175">                    board[endRank][endFile] = piece;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                    whiteToMove = !whiteToMove;</span>
+<span class="fc" id="L177">                    moveNumber += 1;</span>
+<span class="fc" id="L178">                    System.out.println(gameOver());</span>
                 }
             } else {
-<span class="nc" id="L169">                System.out.println(&quot;illegal move&quot;);</span>
+<span class="nc" id="L181">                System.out.println(&quot;illegal move&quot;);</span>
             }
         }
-<span class="nc" id="L172">    }</span>
+<span class="fc" id="L184">    }</span>
 
     public boolean collisionCheck(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (piece.getName().equals(&quot;pawn&quot;)) {</span>
-<span class="fc" id="L176">            return collisionCheckPawn(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (piece.getName().equals(&quot;pawn&quot;)) {</span>
+<span class="fc" id="L188">            return collisionCheckPawn(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (piece.getName().equals(&quot;bishop&quot;)) {</span>
-<span class="fc" id="L179">            return collisionCheckBishop(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (piece.getName().equals(&quot;bishop&quot;)) {</span>
+<span class="fc" id="L191">            return collisionCheckBishop(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (piece.getName().equals(&quot;rook&quot;)) {</span>
-<span class="fc" id="L182">            return collisionCheckRook(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (piece.getName().equals(&quot;rook&quot;)) {</span>
+<span class="fc" id="L194">            return collisionCheckRook(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (piece.getName().equals(&quot;queen&quot;)) {</span>
-<span class="fc" id="L185">            return collissionCheckQueen(piece, startRank, startFile, endRank, endFile);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        if (piece.getName().equals(&quot;queen&quot;)) {</span>
+<span class="fc" id="L197">            return collissionCheckQueen(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
-<span class="fc" id="L188">            return collisionCheckKing(piece, startRank, startFile, endRank, endFile);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
+<span class="fc" id="L200">            return collisionCheckKing(piece, startRank, startFile, endRank, endFile);</span>
         }
-<span class="nc" id="L190">        return true;</span>
+<span class="nc" id="L202">        return true;</span>
     }
 
     public boolean collisionCheckPawn(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;black&quot;)) {</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">            if (board[piece.getRank() + 1][piece.getFile()] != null) {</span>
-<span class="fc" id="L196">                return false;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;black&quot;)) {</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (board[piece.getRank() + 1][piece.getFile()] != null) {</span>
+<span class="fc" id="L208">                return false;</span>
             }
-<span class="fc bfc" id="L198" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="nc" id="L200">                    return false;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="nc" id="L212">                    return false;</span>
                 }
             }
         }
-<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;white&quot;)) {</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">            if (board[piece.getRank() - 1][piece.getFile()] != null) {</span>
-<span class="fc" id="L206">                return false;</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (piece.getColor().equals(&quot;white&quot;)) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if (board[piece.getRank() - 1][piece.getFile()] != null) {</span>
+<span class="fc" id="L218">                return false;</span>
             }
-<span class="fc bfc" id="L208" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="nc" id="L210">                    return false;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="nc" id="L222">                    return false;</span>
                 }
             }
         }
-<span class="fc" id="L214">        return true;</span>
+<span class="fc" id="L226">        return true;</span>
     }
 
     public boolean collisionCheckBishop(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //moving down and right
-<span class="fc bfc" id="L219" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &gt; startFile) {</span>
-<span class="fc" id="L220">            int file = piece.getFile() + 1;</span>
-<span class="fc bfc" id="L221" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L223">                    return false;</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &gt; startFile) {</span>
+<span class="fc" id="L232">            int file = piece.getFile() + 1;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L235">                    return false;</span>
                 }
-<span class="fc" id="L225">                file += 1;</span>
+<span class="fc" id="L237">                file += 1;</span>
             }
         }
         //moving up and right
-<span class="fc bfc" id="L229" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &gt; startFile) {</span>
-<span class="fc" id="L230">            int file = piece.getFile() + 1;</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L233">                    return false;</span>
+<span class="fc bfc" id="L241" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &gt; startFile) {</span>
+<span class="fc" id="L242">            int file = piece.getFile() + 1;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L245">                    return false;</span>
                 }
-<span class="fc" id="L235">                file += 1;</span>
+<span class="fc" id="L247">                file += 1;</span>
             }
         }
         //moving left and down
-<span class="fc bfc" id="L239" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &lt; startFile) {</span>
-<span class="fc" id="L240">            int file = piece.getFile() - 1;</span>
-<span class="fc bfc" id="L241" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L243">                    return false;</span>
+<span class="fc bfc" id="L251" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &lt; startFile) {</span>
+<span class="fc" id="L252">            int file = piece.getFile() - 1;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L255">                    return false;</span>
                 }
-<span class="fc" id="L245">                file -= 1;</span>
+<span class="fc" id="L257">                file -= 1;</span>
             }
         }
         //moving left and up
-<span class="fc bfc" id="L249" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &lt; startFile) {</span>
-<span class="fc" id="L250">            int file = piece.getFile() - 1;</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L253">                    return false;</span>
+<span class="fc bfc" id="L261" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &lt; startFile) {</span>
+<span class="fc" id="L262">            int file = piece.getFile() - 1;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L265">                    return false;</span>
                 }
-<span class="fc" id="L255">                file -= 1;</span>
+<span class="fc" id="L267">                file -= 1;</span>
             }
         }
-<span class="fc" id="L258">        return true;</span>
+<span class="fc" id="L270">        return true;</span>
     }
 
     public boolean collisionCheckRook(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //moving up
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        if (endRank &lt; startRank) {</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="fc" id="L266">                    return false;</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        if (endRank &lt; startRank) {</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="fc" id="L278">                    return false;</span>
                 }
             }
         }
         //moving down
-<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (endRank &gt; startRank) {</span>
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="fc" id="L274">                    return false;</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (endRank &gt; startRank) {</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="fc" id="L286">                    return false;</span>
                 }
             }
         }
         //moving left
-<span class="fc bfc" id="L279" title="All 2 branches covered.">        if (endFile &lt; startFile) {</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">            for (int file = piece.getFile() - 1; file &gt;= endFile; file--) {</span>
-<span class="fc bfc" id="L281" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
-<span class="fc" id="L282">                    return false;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        if (endFile &lt; startFile) {</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">            for (int file = piece.getFile() - 1; file &gt; endFile; file--) {</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
+<span class="fc" id="L294">                    return false;</span>
                 }
             }
         }
         //moving right
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        if (endFile &gt; startFile) {</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">            for (int file = piece.getFile() + 1; file &lt;= endFile; file++) {</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
-<span class="fc" id="L290">                    return false;</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">        if (endFile &gt; startFile) {</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            for (int file = piece.getFile() + 1; file &lt; endFile; file++) {</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
+<span class="fc" id="L302">                    return false;</span>
                 }
             }
         }
-<span class="fc" id="L294">        return true;</span>
+<span class="fc" id="L306">        return true;</span>
     }
 
     public boolean collissionCheckQueen(Piece piece, int startRank, int startFile, int endRank, int endFile) {
         //moving down and right
-<span class="fc bfc" id="L299" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &gt; startFile) {</span>
-<span class="fc" id="L300">            int file = piece.getFile() + 1;</span>
-<span class="fc bfc" id="L301" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L302" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L303">                    return false;</span>
+<span class="fc bfc" id="L311" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &gt; startFile) {</span>
+<span class="fc" id="L312">            int file = piece.getFile() + 1;</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L315">                    return false;</span>
                 }
-<span class="fc" id="L305">                file += 1;</span>
+<span class="fc" id="L317">                file += 1;</span>
             }
         }
         //moving up and right
-<span class="fc bfc" id="L309" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &gt; startFile) {</span>
-<span class="fc" id="L310">            int file = piece.getFile() + 1;</span>
-<span class="fc bfc" id="L311" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L312" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L313">                    return false;</span>
+<span class="fc bfc" id="L321" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &gt; startFile) {</span>
+<span class="fc" id="L322">            int file = piece.getFile() + 1;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L325">                    return false;</span>
                 }
-<span class="fc" id="L315">                file += 1;</span>
+<span class="fc" id="L327">                file += 1;</span>
             }
         }
         //moving left and down
-<span class="fc bfc" id="L319" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &lt; startFile) {</span>
-<span class="fc" id="L320">            int file = piece.getFile() - 1;</span>
-<span class="fc bfc" id="L321" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L323">                    return false;</span>
+<span class="fc bfc" id="L331" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile &lt; startFile) {</span>
+<span class="fc" id="L332">            int file = piece.getFile() - 1;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L335">                    return false;</span>
                 }
-<span class="fc" id="L325">                file -= 1;</span>
+<span class="fc" id="L337">                file -= 1;</span>
             }
         }
         //moving left and up
-<span class="fc bfc" id="L329" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &lt; startFile) {</span>
-<span class="fc" id="L330">            int file = piece.getFile() - 1;</span>
-<span class="fc bfc" id="L331" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
-<span class="fc" id="L333">                    return false;</span>
+<span class="fc bfc" id="L341" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile &lt; startFile) {</span>
+<span class="fc" id="L342">            int file = piece.getFile() - 1;</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">                if (board[rank][file] != null) {</span>
+<span class="fc" id="L345">                    return false;</span>
                 }
-<span class="fc" id="L335">                file -= 1;</span>
+<span class="fc" id="L347">                file -= 1;</span>
             }
         }
-<span class="fc bfc" id="L338" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile == startFile) {</span>
-<span class="fc bfc" id="L339" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt;= endRank; rank--) {</span>
-<span class="fc bfc" id="L340" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="fc" id="L341">                    return false;</span>
+        //moving up
+<span class="fc bfc" id="L351" title="All 4 branches covered.">        if (endRank &lt; startRank &amp;&amp; endFile == startFile) {</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">            for (int rank = piece.getRank() - 1; rank &gt; endRank; rank--) {</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="fc" id="L354">                    return false;</span>
                 }
             }
         }
         //moving down
-<span class="fc bfc" id="L346" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile == startFile) {</span>
-<span class="fc bfc" id="L347" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt;= endRank; rank++) {</span>
-<span class="fc bfc" id="L348" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
-<span class="fc" id="L349">                    return false;</span>
+<span class="fc bfc" id="L359" title="All 4 branches covered.">        if (endRank &gt; startRank &amp;&amp; endFile == startFile) {</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">            for (int rank = piece.getRank() + 1; rank &lt; endRank; rank++) {</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">                if (board[rank][piece.getFile()] != null) {</span>
+<span class="fc" id="L362">                    return false;</span>
                 }
             }
         }
         //moving left
-<span class="fc bfc" id="L354" title="All 4 branches covered.">        if (endFile &lt; startFile &amp;&amp; endRank == startRank) {</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">            for (int file = piece.getFile() - 1; file &gt;= endFile; file--) {</span>
-<span class="fc bfc" id="L356" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
-<span class="fc" id="L357">                    return false;</span>
+<span class="fc bfc" id="L367" title="All 4 branches covered.">        if (endFile &lt; startFile &amp;&amp; endRank == startRank) {</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">            for (int file = piece.getFile() - 1; file &gt; endFile; file--) {</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
+<span class="fc" id="L370">                    return false;</span>
                 }
             }
         }
         //moving right
-<span class="fc bfc" id="L362" title="All 4 branches covered.">        if (endFile &gt; startFile &amp;&amp; endRank == startRank) {</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">            for (int file = piece.getFile() + 1; file &lt;= endFile; file++) {</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">                if (board[piece.getRank()][file] != null) {</span>
-<span class="fc" id="L365">                    return false;</span>
+<span class="fc bfc" id="L375" title="All 4 branches covered.">        if (endFile &gt; startFile &amp;&amp; endRank == startRank) {</span>
+<span class="pc bfc" id="L376" title="All 2 branches covered.">            for (int file = piece.getFile() + 1; file &lt; endFile; file++) {</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">                if (board[piece.getRank()][file] != null) {</span>
+<span class="fc" id="L378">                    return false;</span>
                 }
             }
         }
-<span class="fc" id="L369">        return true;</span>
+<span class="fc" id="L382">        return true;</span>
     }
 
     public boolean collisionCheckKing(Piece piece, int startRank, int startFile, int endRank, int endFile) {
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">        if (board[endRank][endFile] != null /*&amp;&amp; board[endRank][endFile].getColor() == piece.getColor()*/) {</span>
-<span class="fc" id="L374">            System.out.println(&quot;Move blocked by another piece&quot;);</span>
-<span class="fc" id="L375">            return false;</span>
+<span class="pc bpc" id="L386" title="2 of 4 branches missed.">        if (board[endRank][endFile] != null &amp;&amp; board[endRank][endFile].getColor() == piece.getColor()) {</span>
+<span class="fc" id="L387">            System.out.println(&quot;Move blocked by another piece&quot;);</span>
+<span class="fc" id="L388">            return false;</span>
         }
-<span class="nc" id="L377">        return true;</span>
+<span class="nc" id="L390">        return true;</span>
     }
 
     public int getMoveNumber() {
-<span class="nc" id="L381">        return moveNumber;</span>
+<span class="nc" id="L394">        return moveNumber;</span>
     }
 
     public String getWinningSide() {
-<span class="nc" id="L385">        return winningSide;</span>
+<span class="fc" id="L398">        return winningSide;</span>
     }
+
+    public boolean isWhiteKingOnBoard() {
+<span class="nc" id="L402">        return whiteKingOnBoard;</span>
+    }
+
+    public boolean isBlackKingOnBoard() {
+<span class="nc" id="L406">        return blackKingOnBoard;</span>
+    }
+
+    public void setWhiteToMove(boolean jeba) {
+<span class="fc" id="L410">        this.whiteToMove = jeba;</span>
+<span class="fc" id="L411">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,6 +1,17 @@
 Projektissa on tarkoitus toteuttaa ohjelma, jolla voi pelata shakkia.
 Ohjelmaan ei ole tarkoitus toteuttaa tietokonevastustajaa, vaan tavoite on mahdollistaa ainoastaan shakin pelaaminen supistetuilla säännöillä.
 
+Ohjelma on koodattu javan versiolla 1.8 (java 8), joten se ei välttämättä toimi uudemmilla versioilla.
+
+4. iteraation palautuksesta
+	- Valitettavasti tilanne on edelleen sama kuin 3. iteraation palautuksessa, eli ohjelma ei ole edennyt
+		- Aikani on ollut kortilla viimeisen kuukauden ajan, mutta lopulliseen palautukseen minun pitäisi ehtiä toteuttaa hieman lisää toiminnallisuuksia
+
+3. Iteraation palautuksesta
+	- valitettavasti en ole ehtinyt edistämänään ohjelmaa edellisestä palautuksesta, joten toiminnallisuudet
+	ovat samat kuin 2. iteraatiossa
+	- ohjelmaa varten on luotu jar-tiedosto target-kansioon
+
 Säännöistä
     - Shakki- ja shakkimattitoiminnallisuuksia ei pyritä toteuttamaan ensisijaisesti
         - Peli päättyy joko kuninkaan syömiseen tai materiaaliedun omaavan pelaajan voittoon, kun musta on tehnyt 25. siirtonsa (yhteensä siis 50 siirtoa, 25 kummallekin)
@@ -29,4 +40,4 @@ Säännöistä
 		- mukana testausta varten
 		- tämä poistetaan viimeistään lopullisessa versiossa
 	- ohjelma tallentaa pelin alkaessa pelin numeron tietokantaan ja pelin päätyttyä tallentaa pelin voittajan
-    
+  

@@ -185,7 +185,7 @@ public class BoardTest {
         Board board = new Board();
         board.deletAllPieces();
         board.setWhiteToMove(false);
-        
+
         System.out.println(board.printBoard());
         System.out.println("winning side: " + board.getWinningSide());
         board.addNewPiece("queen", "black", 4, 3, -9);
@@ -196,5 +196,6 @@ public class BoardTest {
 
         assertEquals("Black", board.getWinningSide());
     }
+
 
 }

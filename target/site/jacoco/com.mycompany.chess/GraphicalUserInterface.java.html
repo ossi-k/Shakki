@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphicalUserInterface.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Chess</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.chess</a> &gt; <span class="el_source">GraphicalUserInterface.java</span></div><h1>GraphicalUserInterface.java</h1><pre class="source lang-java linenums">package com.mycompany.chess;
+
+import java.awt.event.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.swing.text.Position;
+
+public class GraphicalUserInterface extends Application {
+
+<span class="nc" id="L15">    GridPane chessBoard = new GridPane();</span>
+    Database database;
+    private Board board;
+    private int clickcounter;
+    private int startRank;
+    private int startFile;
+    private int endRank;
+    private int endFile;
+
+<span class="nc" id="L24">    public GraphicalUserInterface() {</span>
+<span class="nc" id="L25">        this.board = new Board();</span>
+        //this.database = new Database();
+<span class="nc" id="L27">        this.clickcounter = 0;</span>
+<span class="nc" id="L28">        this.startRank = 0;</span>
+<span class="nc" id="L29">        this.startFile = 0;</span>
+<span class="nc" id="L30">        this.endRank = 0;</span>
+<span class="nc" id="L31">        this.endFile = 0;</span>
+<span class="nc" id="L32">    }</span>
+
+    @Override
+    public void start(Stage window) {
+        //test
+<span class="nc" id="L37">        this.database = new Database();</span>
+        
+<span class="nc" id="L39">        drawChessBoard(chessBoard);</span>
+
+<span class="nc" id="L41">        Scene view = new Scene(chessBoard);</span>
+
+<span class="nc" id="L43">        window.setScene(view);</span>
+<span class="nc" id="L44">        window.show();</span>
+<span class="nc" id="L45">    }</span>
+
+    public void launchUi() {
+<span class="nc" id="L48">        launch(GraphicalUserInterface.class);</span>
+<span class="nc" id="L49">    }</span>
+
+    public void coordinates(MouseEvent e) {
+<span class="nc" id="L52">        Button button = (Button) e.getSource();</span>
+<span class="nc" id="L53">        int file = GridPane.getColumnIndex(button);</span>
+<span class="nc" id="L54">        int rank = GridPane.getRowIndex(button);</span>
+<span class="nc" id="L55">        System.out.println(&quot;rank: &quot; + rank + &quot;file: &quot; + file);</span>
+<span class="nc" id="L56">    }</span>
+
+    public void getCoordinates(Button button) {
+<span class="nc" id="L59">        button.setOnAction((event) -&gt; {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (clickcounter == 0) {</span>
+<span class="nc" id="L61">                startRank = GridPane.getRowIndex(button);</span>
+<span class="nc" id="L62">                startFile = GridPane.getColumnIndex(button);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                if (board.selectPiece(startRank, startFile) == null) {</span>
+<span class="nc" id="L64">                    System.out.println(&quot;There is no piece in that square.&quot;);</span>
+<span class="nc" id="L65">                    System.out.println(&quot;Please select a proper piece.&quot;);</span>
+                } else {
+<span class="nc" id="L67">                    clickcounter += 1;</span>
+                }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            } else if (clickcounter == 1) {</span>
+<span class="nc" id="L70">                endRank = GridPane.getRowIndex(button);</span>
+<span class="nc" id="L71">                endFile = GridPane.getColumnIndex(button);</span>
+<span class="nc" id="L72">                board.movePiece(startRank, startFile, endRank, endFile);</span>
+<span class="nc bnc" id="L73" title="All 6 branches missed.">                if (board.getMoveNumber() == 50 || board.isBlackKingOnBoard() == false || board.isWhiteKingOnBoard() == false) {</span>
+<span class="nc" id="L74">                    System.out.println(board.gameOver());</span>
+<span class="nc" id="L75">                    database.insertWinner(board.getWinningSide());</span>
+<span class="nc" id="L76">                    System.exit(0);</span>
+                } else {
+<span class="nc" id="L78">                    drawChessBoard(chessBoard);</span>
+<span class="nc" id="L79">                    clickcounter = 0;</span>
+                }
+            }
+<span class="nc" id="L82">        });</span>
+<span class="nc" id="L83">    }</span>
+
+    public void drawChessBoard(GridPane chessBoard) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        for (int rank = 0; rank &lt; 8; rank++) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            for (int file = 0; file &lt; 8; file++) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                if (board.selectPiece(rank, file) != null) {</span>
+<span class="nc" id="L89">                    Piece piece = board.selectPiece(rank, file);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                    if (piece.getColor().toLowerCase().equals(&quot;white&quot;)) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;pawn&quot;)) {</span>
+<span class="nc" id="L92">                            Image image = new Image(&quot;file:white_pawn.png&quot;);</span>
+<span class="nc" id="L93">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L94">                            Button button = new Button();</span>
+<span class="nc" id="L95">                            getCoordinates(button);</span>
+<span class="nc" id="L96">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L97">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L98">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;rook&quot;)) {</span>
+<span class="nc" id="L101">                            Image image = new Image(&quot;file:white_rook.png&quot;);</span>
+<span class="nc" id="L102">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L103">                            Button button = new Button();</span>
+<span class="nc" id="L104">                            getCoordinates(button);</span>
+<span class="nc" id="L105">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L106">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L107">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;knight&quot;)) {</span>
+<span class="nc" id="L110">                            Image image = new Image(&quot;file:white_knight.png&quot;);</span>
+<span class="nc" id="L111">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L112">                            Button button = new Button();</span>
+<span class="nc" id="L113">                            getCoordinates(button);</span>
+<span class="nc" id="L114">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L115">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L116">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;bishop&quot;)) {</span>
+<span class="nc" id="L119">                            Image image = new Image(&quot;file:white_bishop.png&quot;);</span>
+<span class="nc" id="L120">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L121">                            Button button = new Button();</span>
+<span class="nc" id="L122">                            getCoordinates(button);</span>
+<span class="nc" id="L123">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L124">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L125">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;queen&quot;)) {</span>
+<span class="nc" id="L128">                            Image image = new Image(&quot;file:white_queen.png&quot;);</span>
+<span class="nc" id="L129">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L130">                            Button button = new Button();</span>
+<span class="nc" id="L131">                            getCoordinates(button);</span>
+<span class="nc" id="L132">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L133">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L134">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
+<span class="nc" id="L137">                            Image image = new Image(&quot;file:white_king.png&quot;);</span>
+<span class="nc" id="L138">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L139">                            Button button = new Button();</span>
+<span class="nc" id="L140">                            getCoordinates(button);</span>
+<span class="nc" id="L141">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L142">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L143">                            chessBoard.add(button, file, rank);</span>
+                        }
+                    }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                    if (piece.getColor().toLowerCase().equals(&quot;black&quot;)) {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;pawn&quot;)) {</span>
+<span class="nc" id="L148">                            Image image = new Image(&quot;file:black_pawn.png&quot;);</span>
+<span class="nc" id="L149">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L150">                            Button button = new Button();</span>
+<span class="nc" id="L151">                            getCoordinates(button);</span>
+<span class="nc" id="L152">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L153">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L154">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;rook&quot;)) {</span>
+<span class="nc" id="L157">                            Image image = new Image(&quot;file:black_rook.png&quot;);</span>
+<span class="nc" id="L158">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L159">                            Button button = new Button();</span>
+<span class="nc" id="L160">                            getCoordinates(button);</span>
+<span class="nc" id="L161">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L162">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L163">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;knight&quot;)) {</span>
+<span class="nc" id="L166">                            Image image = new Image(&quot;file:black_knight.png&quot;);</span>
+<span class="nc" id="L167">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L168">                            Button button = new Button();</span>
+<span class="nc" id="L169">                            getCoordinates(button);</span>
+<span class="nc" id="L170">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L171">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L172">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;bishop&quot;)) {</span>
+<span class="nc" id="L175">                            Image image = new Image(&quot;file:black_bishop.png&quot;);</span>
+<span class="nc" id="L176">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L177">                            Button button = new Button();</span>
+<span class="nc" id="L178">                            getCoordinates(button);</span>
+<span class="nc" id="L179">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L180">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L181">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L183" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;queen&quot;)) {</span>
+<span class="nc" id="L184">                            Image image = new Image(&quot;file:black_queen.png&quot;);</span>
+<span class="nc" id="L185">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L186">                            Button button = new Button();</span>
+<span class="nc" id="L187">                            getCoordinates(button);</span>
+<span class="nc" id="L188">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L189">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L190">                            chessBoard.add(button, file, rank);</span>
+                        }
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                        if (piece.getName().toLowerCase().equals(&quot;king&quot;)) {</span>
+<span class="nc" id="L193">                            Image image = new Image(&quot;file:black_king.png&quot;);</span>
+<span class="nc" id="L194">                            ImageView imageview = new ImageView(image);</span>
+<span class="nc" id="L195">                            Button button = new Button();</span>
+<span class="nc" id="L196">                            getCoordinates(button);</span>
+<span class="nc" id="L197">                            button.setPrefSize(80, 80);</span>
+<span class="nc" id="L198">                            button.setGraphic(imageview);</span>
+<span class="nc" id="L199">                            chessBoard.add(button, file, rank);</span>
+                        }
+                    }
+<span class="nc" id="L202">                } else {</span>
+<span class="nc" id="L203">                    Button button = new Button();</span>
+<span class="nc" id="L204">                    getCoordinates(button);</span>
+<span class="nc" id="L205">                    button.setPrefSize(80, 80);</span>
+<span class="nc" id="L206">                    chessBoard.add(button, file, rank);</span>
+                }
+            }
+        }
+<span class="nc" id="L210">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
