@@ -3,6 +3,8 @@ package com.mycompany.chess;
 import java.awt.event.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -35,7 +37,7 @@ public class GraphicalUserInterface extends Application {
     public void start(Stage window) {
         //test
         this.database = new Database();
-        
+
         drawChessBoard(chessBoard);
 
         Scene view = new Scene(chessBoard);
@@ -207,6 +209,16 @@ public class GraphicalUserInterface extends Application {
                 }
             }
         }
+        Button quitButton = new Button("Quit game");
+        getCoordinates(quitButton);
+        quitButton.setPrefSize(160, 80);
+        quitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        chessBoard.add(quitButton, 8, 0);
     }
 
 }
